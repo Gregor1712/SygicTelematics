@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <RootNamespace>Identity.API</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Identity.Application\Identity.Application.csproj" />
+        <ProjectReference Include="..\Identity.Infrastructure\Identity.Infrastructure.csproj" />
+        <ProjectReference Include="..\..\..\Shared\Shared.Kernel\Shared.Kernel.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="NSwag.AspNetCore" Version="14.6.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Update="..\Identity.Infrastructure\Data\UserSeedData.json">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <Link>Data\UserSeedData.json</Link>
+        </None>
+    </ItemGroup>
+
+</Project>

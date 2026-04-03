@@ -1,0 +1,7 @@
+Id;Name;Cores;Threads;BaseClock;BoostClock;TDP;Socket;ReleaseYear;Price;Description;ManufacturerDboId
+0;Core i9-14900K;24;32;3.2;6.0;125;LGA1700;2023;589.99;Intel 14th Gen flagship desktop processor;1
+0;Core i7-14700K;20;28;3.4;5.6;125;LGA1700;2023;409.99;Intel 14th Gen high-performance desktop processor;1
+0;Core i5-14600K;14;20;3.5;5.3;125;LGA1700;2023;319.99;Intel 14th Gen mid-range desktop processor;1
+0;Ryzen 9 7950X;16;32;4.5;5.7;170;AM5;2022;699.99;AMD Zen 4 flagship desktop processor;2
+0;Ryzen 7 7700X;8;16;4.5;5.4;105;AM5;2022;399.99;AMD Zen 4 high-performance desktop processor;2
+0;Ryzen 5 7600X;6;12;4.7;5.3;105;AM5;2022;299.99;AMD Zen 4 mid-range desktop processor;2

@@ -1,0 +1,40 @@
+Id;Name;Cores;Threads;BaseClock;BoostClock;TDP;Socket;ReleaseYear;Price;Description;ManufacturerDboId
+100;Intel Core i3-10100;4;8;3.60;4.30;65;LGA1200;2020;119.99;"4-jadrový desktopový procesor so 8 vláknami, vhodný pre kancelárske a domáce použitie. Podpora DDR4, PCIe 3.0, integrovaná grafika Intel UHD Graphics.";1
+101;Intel Core i5-10400;6;12;2.90;4.30;65;LGA1200;2020;179.99;"6-jadrový procesor s 12 vláknami pre univerzálne PC zostavy. Vhodný na prácu aj hranie. Podpora DDR4, PCIe 3.0, integrovaná grafika Intel UHD Graphics.";1
+102;Intel Core i7-10700K;8;16;3.80;5.10;125;LGA1200;2020;349.99;"8-jadrový výkonný procesor so 16 vláknami urcený pre gaming a produktivitu. Podpora DDR4, PCIe 3.0, integrovaná grafika Intel UHD Graphics.";1
+103;Intel Core i9-10900K;10;20;3.70;5.30;125;LGA1200;2020;489.99;"10-jadrový procesor s 20 vláknami pre nárocné aplikácie a hry. Podpora DDR4, PCIe 3.0, integrovaná grafika Intel UHD Graphics.";1
+104;Intel Core i5-11400;6;12;2.60;4.40;65;LGA1200;2021;189.99;"6-jadrový procesor 11. generácie vhodný pre herné a pracovné zostavy. Podpora PCIe 4.0, DDR4, integrovaná grafika Intel UHD Graphics 730.";1
+105;Intel Core i7-11700K;8;16;3.60;5.00;125;LGA1200;2021;379.99;"8-jadrový procesor s vysokým jednovláknovým výkonom. Podpora PCIe 4.0, DDR4, integrovaná grafika Intel UHD Graphics 750.";1
+106;Intel Core i9-11900K;8;16;3.50;5.30;125;LGA1200;2021;539.99;"Vlajkový procesor 11. generácie s vysokým taktovaním. Podpora PCIe 4.0, DDR4, integrovaná grafika Intel UHD Graphics 750.";1
+107;Intel Core i5-12400;6;12;2.50;4.40;65;LGA1700;2022;199.99;"6-jadrový procesor 12. generácie s výborným pomerom cena/výkon. Podpora DDR4/DDR5, PCIe 5.0, integrovaná grafika Intel UHD Graphics 730.";1
+108;Intel Core i7-12700K;12;20;3.60;5.00;125;LGA1700;2022;419.99;"Hybridný 12-jadrový procesor (8P+4E) s 20 vláknami pre nárocné nasadenie. Podpora DDR4/DDR5, PCIe 5.0.";1
+109;Intel Core i9-12900K;16;24;3.20;5.20;125;LGA1700;2021;589.99;"16-jadrový hybridný procesor s 24 vláknami urcený pre high-end PC. Podpora DDR4/DDR5, PCIe 5.0.";1
+110;Intel Core i5-13600K;14;20;3.50;5.10;125;LGA1700;2023;329.99;"14-jadrový procesor (6P+8E) ideálny pre herné zostavy vyššej triedy. Podpora DDR4/DDR5, PCIe 5.0.";1
+111;Intel Core i7-13700K;16;24;3.40;5.40;125;LGA1700;2023;409.99;"16-jadrový hybridný procesor s vysokým výkonom pre gaming a prácu. Podpora DDR4/DDR5, PCIe 5.0.";1
+112;Intel Core i9-13900K;24;32;3.00;5.80;125;LGA1700;2022;589.99;"24-jadrový vlajkový procesor pre extrémny výkon. Podpora DDR4/DDR5, PCIe 5.0.";1
+113;Intel Core i9-14900K;24;32;3.20;6.00;125;LGA1700;2023;589.99;"Najvýkonnejší desktopový procesor Intel 14. generácie urcený pre špickové herné a pracovné zostavy.";1
+200;AMD Ryzen 5 3600;6;12;3.60;4.20;65;AM4;2019;199.99;"6-jadrový procesor s 12 vláknami pre univerzálne použitie. Podpora DDR4, PCIe 4.0, socket AM4.";2
+201;AMD Ryzen 7 3700X;8;16;3.60;4.40;65;AM4;2019;329.99;"8-jadrový procesor s nízkou spotrebou vhodný na prácu aj hranie. Podpora DDR4, PCIe 4.0.";2
+202;AMD Ryzen 5 5600X;6;12;3.70;4.60;65;AM4;2020;299.99;"Efektívny 6-jadrový procesor pre herné PC. Podpora DDR4, PCIe 4.0.";2
+203;AMD Ryzen 7 5800X;8;16;3.80;4.70;105;AM4;2020;449.99;"Výkonný 8-jadrový procesor pre gaming a produktivitu. Podpora DDR4, PCIe 4.0.";2
+204;AMD Ryzen 9 5900X;12;24;3.70;4.80;105;AM4;2020;549.99;"12-jadrový procesor pre nárocné aplikácie a multitasking. Podpora DDR4, PCIe 4.0.";2
+205;AMD Ryzen 9 5950X;16;32;3.40;4.90;105;AM4;2020;799.99;"16-jadrový procesor pre profesionálne nasadenie. Podpora DDR4, PCIe 4.0.";2
+206;AMD Ryzen 5 7600X;6;12;4.70;5.30;105;AM5;2022;299.99;"Moderný 6-jadrový procesor s vysokým IPC. Podpora DDR5, PCIe 5.0.";2
+207;AMD Ryzen 7 7700X;8;16;4.50;5.40;105;AM5;2022;399.99;"8-jadrový procesor pre výkonné herné zostavy. Podpora DDR5, PCIe 5.0.";2
+208;AMD Ryzen 9 7900X;12;24;4.70;5.40;170;AM5;2022;549.99;"12-jadrový high-end procesor pre moderné aplikácie. Podpora DDR5, PCIe 5.0.";2
+209;AMD Ryzen 9 7950X;16;32;4.50;5.70;170;AM5;2022;699.99;"Vlajkový 16-jadrový procesor AMD pre extrémny výkon. Podpora DDR5, PCIe 5.0.";2
+210;AMD Ryzen 7 7800X3D;8;16;4.20;5.00;120;AM5;2023;449.99;"Herný procesor s 3D V-Cache technológiou pre maximálny FPS výkon. Podpora DDR5, PCIe 5.0.";2
+211;AMD Ryzen 9 7950X3D;16;32;4.20;5.70;120;AM5;2023;699.99;"Špickový herný a pracovný procesor s 3D V-Cache. Podpora DDR5, PCIe 5.0.";2
+212;AMD Ryzen 7 8700G;8;16;4.20;5.10;65;AM5;2024;329.99;"Desktopový APU procesor s výkonnou integrovanou grafikou Radeon. Podpora DDR5, PCIe 4.0.";2
+213;AMD Ryzen 5 8600G;6;12;4.30;5.00;65;AM5;2024;229.99;"APU procesor vhodný pre kompaktné zostavy bez dedikovanej grafiky. Podpora DDR5, PCIe 4.0.";2
+300;AMD Ryzen 9 9950X;16;32;4.30;5.70;170;AM5;2024;699.99;"16-jadrový špickový desktopový procesor AMD Ryzen 9 9950X (Zen 5) s 32 vláknami. Vysoký výkon pre gaming a nárocné aplikácie, 80 MB cache, podpora DDR5 a PCIe 5.0.";2
+301;AMD Ryzen 9 9900X;12;24;4.40;5.60;120;AM5;2024;599.99;"12-jadrový výkonný desktopový procesor AMD Ryzen 9 9900X (Zen 5) s 24 vláknami. Skvelý výkon pre tvorbu obsahu a hry, podpora DDR5 a PCIe 5.0.";2
+302;AMD Ryzen 7 9700X;8;16;3.80;5.50;65;AM5;2024;399.99;"8-jadrový desktopový procesor AMD Ryzen 7 9700X (Zen 5) s 16 vláknami. Vysoký výkon pre herné a produktívne PC, podpora DDR5 a PCIe 5.0.";2
+303;AMD Ryzen 5 9600X;6;12;3.90;5.40;65;AM5;2024;299.99;"6-jadrový mainstream procesor AMD Ryzen 5 9600X (Zen 5) s 12 vláknami. Ideálny pre herné a univerzálne zostavy, podpora DDR5 a PCIe 5.0.";2
+304;AMD Ryzen 9 9950X3D;16;32;4.30;5.70;170;AM5;2025;699.99;"16-jadrový desktopový procesor AMD Ryzen 9 9950X3D s 32 vláknami, 3D V-Cache pre maximálny herný a tvorivý výkon. Základná frekvencia 4,3 GHz, boost až 5,7 GHz, 144 MB cache. Podpora DDR5 a PCIe 5.0, socket AM5.";2
+305;AMD Ryzen 9 9900X3D;12;24;4.40;5.50;120;AM5;2025;599.99;"12-jadrový desktopový procesor AMD Ryzen 9 9900X3D s 24 vláknami a 3D V-Cache pre vylepšený herný zážitok. Základná frekvencia 4,4 GHz, boost až 5,5 GHz, 140 MB cache. Podpora DDR5 a PCIe 5.0, socket AM5.";2
+400;Intel Core Ultra 9 290K Plus;24;24;3.40;5.80;125;LGA1851;2025;599.99;"Intel Core Ultra 9 290K Plus, Arrow Lake Refresh desktop CPU s 24 jadrami (P+E mix) a vysokým boostom až ~5,8 GHz. Výkonný procesor pre moderné hry a multitasking, podpora DDR5-7200 a AI NPU.";1
+401;Intel Core Ultra 7 270K Plus;20;20;3.20;5.60;125;LGA1851;2025;499.99;"Intel Core Ultra 7 270K Plus, Arrow Lake Refresh desktop CPU so 20 jadrami (8P+12E) a vysokým boostom. Vyvážený výkon pre gaming a tvorivú prácu, DDR5-7200 a moderné technológie.";1
+402;Intel Core Ultra 5 250K Plus;18;18;3.10;5.50;125;LGA1851;2025;399.99;"Intel Core Ultra 5 250K Plus desktop CPU s 18 jadrami (6P+12E). Efektívny a výkonný mainstream procesor pre všestranné zostavy, podpora DDR5-7200.";1
+
+												

@@ -1,0 +1,12 @@
+@baseUrl = http://localhost:5100
+@vehicleId = 2c33e6b8-f7cc-478d-b5be-f14ee7a768da
+
+### Get all vehicles (BFF)
+GET {{baseUrl}}/api/bff/vehicles
+Accept: application/json
+
+### Get aggregated vehicle detail (BFF)
+GET {{baseUrl}}/api/bff/vehicles/{{vehicleId}}
+Accept: application/json
+
+###
