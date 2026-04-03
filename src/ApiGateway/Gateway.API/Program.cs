@@ -5,16 +5,10 @@ using Shared.Kernel.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// builder.Services.AddHttpClient("IdentityService", client =>
-// {
-//     client.BaseAddress = new Uri(builder.Configuration["ServiceUrls:Identity"]
-//         ?? "http://localhost:5101");
-// });
-
-builder.Services.AddHttpClient("CatalogService", client =>
+builder.Services.AddHttpClient("IdentityService", client =>
 {
-    client.BaseAddress = new Uri(builder.Configuration["ServiceUrls:Catalog"]
-        ?? "http://localhost:5102");
+    client.BaseAddress = new Uri(builder.Configuration["ServiceUrls:Identity"]
+        ?? "http://localhost:5101");
 });
 
 builder.Services.AddHttpClient("VehicleService", client =>
@@ -58,6 +52,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     {
         var tokenKey = builder.Configuration["TokenKey"]
                        ?? throw new Exception("Token key not found");
+        options.UseSecurityTokenValidators = true;
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuerSigningKey = true,
@@ -67,7 +62,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-builder.Services.AddAuthorization();
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("RequireUserRole", policy =>
+        policy.RequireAuthenticatedUser());
+});
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 

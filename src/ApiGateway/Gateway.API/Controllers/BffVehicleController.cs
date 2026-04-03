@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Gateway.API.Controllers;
@@ -63,11 +64,13 @@ public class BffVehicleController(IHttpClientFactory httpClientFactory) : Contro
     /// <summary>
     /// Get all vehicles with their latest location and battery status
     /// </summary>
+    [Authorize(Policy = "RequireUserRole")]
     [HttpGet]
     public async Task<IActionResult> GetAllVehicles()
     {
         var vehicleClient = httpClientFactory.CreateClient("VehicleService");
-        var response = await vehicleClient.GetAsync("/api/vehicles");
+        var queryString = Request.QueryString.Value ?? "";
+        var response = await vehicleClient.GetAsync($"/api/vehicles{queryString}");
 
         if (!response.IsSuccessStatusCode)
             return StatusCode((int)response.StatusCode);

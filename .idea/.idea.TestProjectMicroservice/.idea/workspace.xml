@@ -25,13 +25,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e36ca92a-df90-4831-b385-bb7ea692a822" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Services/Vehicle/Vehicle.Application/Filters/Conditions/ConditionBase.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Services/Vehicle/Vehicle.Application/Filters/Conditions/StringCondition.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Services/Vehicle/Vehicle.Application/Filters/FilterBase.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Services/Vehicle/Vehicle.Application/Filters/IConditionBuilder.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TestProjectMicroservice/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TestProjectMicroservice/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Services/Vehicle/Vehicle.API/Controllers/VehiclesController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/Vehicle/Vehicle.API/Controllers/VehiclesController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Services/Vehicle/Vehicle.API/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/Vehicle/Vehicle.API/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TestProjectMicroservice.slnx" beforeDir="false" afterPath="$PROJECT_DIR$/TestProjectMicroservice.slnx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ApiGateway/Gateway.API/Controllers/BffVehicleController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/ApiGateway/Gateway.API/Controllers/BffVehicleController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ApiGateway/Gateway.API/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/ApiGateway/Gateway.API/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ApiGateway/Gateway.API/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/ApiGateway/Gateway.API/appsettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/start-all.bat" beforeDir="false" afterPath="$PROJECT_DIR$/start-all.bat" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,8 +59,12 @@
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/1d8b23e1e431b24cf7c1dfb82e9beaa902041dd7e3da0f56c5991144595/AuthorizeAttribute.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/71d1ed3c8b415869f7243ab3f241b707029e768647d1e2161adb67410746e/IPublishEndpoint.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d219c897715f6729f4c5ebba7c4aac113c40e8e9e711c8dea9bc77f41d869/DependencyInjectionRegistrationExtensions.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/fb693663d6e9a7e9b7e2926fd43ccff9c59647ba372d26ca8134994f81f97c15/AuthorizationPolicyBuilder.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Services/Catalog/Catalog.API/Controllers/CpuController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Services/Catalog/Catalog.Infrastructure/Services/ServerService.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="KubernetesApiPersistence">{}</component>
   <component name="KubernetesApiProvider">{
@@ -84,32 +87,33 @@
     <option name="openDirectoriesWithSingleClick" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;.NET Launch Settings Profile.Catalog.API: http.executor&quot;: &quot;Run&quot;,
-    &quot;HTTP Request.All in Gateway.API.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
-    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    ".NET Launch Settings Profile.Catalog.API: http.executor": "Run",
+    ".NET Project.Vehicle.API.executor": "Debug",
+    "HTTP Request.All in Gateway.API.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.MCP Project settings loaded": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "cidr.known.project.marker": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "git-widget-placeholder": "master",
+    "junie.onboarding.icon.badge.shown": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "to.speed.mode.migration.done": "true",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunDashboard">
     <option name="configurationStatuses">
       <map>
@@ -123,7 +127,7 @@
       </map>
     </option>
   </component>
-  <component name="RunManager" selected="HTTP Request.All in Gateway.API">
+  <component name="RunManager" selected=".NET Project.Vehicle.API">
     <configuration name="Alert.API" type="DotNetProject" factoryName=".NET Project">
       <option name="EXE_PATH" value="" />
       <option name="PROGRAM_PARAMETERS" value="" />
@@ -367,7 +371,7 @@
       <workItem from="1775225509242" duration="196000" />
       <workItem from="1775225721075" duration="150000" />
       <workItem from="1775225904818" duration="186000" />
-      <workItem from="1775226242595" duration="2315000" />
+      <workItem from="1775226242595" duration="12162000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <option name="closed" value="true" />
@@ -393,7 +397,23 @@
       <option name="project" value="LOCAL" />
       <updated>1775226507849</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="add server side filtering, sorting, pagination">
+      <option name="closed" value="true" />
+      <created>1775228628676</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1775228628676</updated>
+    </task>
+    <task id="LOCAL-00005" summary="add start-all.bat">
+      <option name="closed" value="true" />
+      <created>1775232003121</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1775232003121</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -417,7 +437,9 @@
     <MESSAGE value="init" />
     <MESSAGE value="Update" />
     <MESSAGE value="fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix" />
+    <MESSAGE value="add server side filtering, sorting, pagination" />
+    <MESSAGE value="add start-all.bat" />
+    <option name="LAST_COMMIT_MESSAGE" value="add start-all.bat" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
