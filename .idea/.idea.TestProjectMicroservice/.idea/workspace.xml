@@ -25,8 +25,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e36ca92a-df90-4831-b385-bb7ea692a822" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/Services/Vehicle/Vehicle.Application/Filters/Conditions/ConditionBase.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Services/Vehicle/Vehicle.Application/Filters/Conditions/StringCondition.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Services/Vehicle/Vehicle.Application/Filters/FilterBase.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Services/Vehicle/Vehicle.Application/Filters/IConditionBuilder.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TestProjectMicroservice/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TestProjectMicroservice/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TestProjectMicroservice.slnx" beforeDir="false" afterPath="$PROJECT_DIR$/TestProjectMicroservice.slnx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Services/Vehicle/Vehicle.API/Controllers/VehiclesController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/Vehicle/Vehicle.API/Controllers/VehiclesController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Services/Vehicle/Vehicle.API/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/Vehicle/Vehicle.API/Program.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -362,6 +367,7 @@
       <workItem from="1775225509242" duration="196000" />
       <workItem from="1775225721075" duration="150000" />
       <workItem from="1775225904818" duration="186000" />
+      <workItem from="1775226242595" duration="2315000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <option name="closed" value="true" />
@@ -379,7 +385,15 @@
       <option name="project" value="LOCAL" />
       <updated>1775225195261</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="fix">
+      <option name="closed" value="true" />
+      <created>1775226507849</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1775226507849</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -402,7 +416,8 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="init" />
     <MESSAGE value="Update" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update" />
+    <MESSAGE value="fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

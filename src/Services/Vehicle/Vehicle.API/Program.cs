@@ -32,6 +32,7 @@ builder.Services.AddMassTransit(x =>
 });
 
 builder.Services.AddScoped<ICsvDataSeeder, CsvDataSeeder>();
+builder.Services.AddScoped<Vehicle.Application.Interfaces.IServerService, Vehicle.Infrastructure.Services.ServerService>();
 builder.Services.AddCors();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

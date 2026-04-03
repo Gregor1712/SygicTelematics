@@ -1,5 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using Shared.Kernel.Wrappers;
+using Vehicle.Application.DTOs;
+using Vehicle.Application.Filters;
+using Vehicle.Application.Interfaces;
 using Vehicle.Infrastructure.Data;
 
 namespace Vehicle.API.Controllers;
@@ -15,11 +18,15 @@ public class VehiclesController : ControllerBase
         _context = context;
     }
 
-    [HttpGet]
-    public async Task<IActionResult> GetAll()
+    [HttpGet(Name = nameof(GetAll))]
+    public async Task<ActionResult<PagedResponse<List<VehicleDTO>>>> GetAll(
+        [FromServices] IServerService server,
+        [FromQuery] VehicleFilter filter,
+        [FromQuery] SortFilter sort,
+        [FromQuery] PaginationFilter pagination)
     {
-        var vehicles = await _context.Vehicles.ToListAsync();
-        return Ok(vehicles);
+        var data = await server.GetVehicle(filter, sort, pagination);
+        return Ok(data);
     }
 
     [HttpGet("{id:guid}")]
