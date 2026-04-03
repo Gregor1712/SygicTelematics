@@ -1,6 +1,8 @@
+using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Shared.Kernel.Middleware;
 using Vehicle.Application.Interfaces;
+using Vehicle.Infrastructure.Consumers;
 using Vehicle.Infrastructure.Data;
 using Vehicle.Infrastructure.Services;
 
@@ -10,6 +12,24 @@ builder.Configuration.AddJsonFile("appsettings.Development.json", optional: true
 
 builder.Services.AddDbContext<VehicleDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddMassTransit(x =>
+{
+    x.AddConsumer<LocationUpdatedConsumer>();
+    x.AddConsumer<BatteryStatusUpdatedConsumer>();
+    x.AddConsumer<TripCompletedConsumer>();
+
+    x.UsingRabbitMq((context, cfg) =>
+    {
+        cfg.Host(builder.Configuration["RabbitMQ:Host"] ?? "localhost", "/", h =>
+        {
+            h.Username(builder.Configuration["RabbitMQ:Username"] ?? "guest");
+            h.Password(builder.Configuration["RabbitMQ:Password"] ?? "guest");
+        });
+
+        cfg.ConfigureEndpoints(context);
+    });
+});
 
 builder.Services.AddScoped<ICsvDataSeeder, CsvDataSeeder>();
 builder.Services.AddCors();

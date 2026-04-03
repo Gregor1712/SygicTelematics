@@ -9,4 +9,44 @@ Accept: application/json
 GET {{baseUrl}}/api/bff/vehicles/{{vehicleId}}
 Accept: application/json
 
+### Post new location (triggers LocationUpdatedEvent via RabbitMQ)
+POST http://localhost:5104/api/locations
+Content-Type: application/json
+
+{
+  "vehicleId": "2c33e6b8-f7cc-478d-b5be-f14ee7a768da",
+  "latitude": 48.1486,
+  "longitude": 17.1077,
+  "speed": 65.5
+}
+
+### Post new battery status (triggers BatteryStatusUpdatedEvent via RabbitMQ)
+POST http://localhost:5105/api/battery
+Content-Type: application/json
+
+{
+  "vehicleId": "2c33e6b8-f7cc-478d-b5be-f14ee7a768da",
+  "percentage": 45,
+  "voltage": 395.2,
+  "temperature": 32.1,
+  "isCharging": false
+}
+
+### Post new trip (triggers TripCompletedEvent via RabbitMQ)
+POST http://localhost:5106/api/trips
+Content-Type: application/json
+
+{
+  "vehicleId": "2c33e6b8-f7cc-478d-b5be-f14ee7a768da",
+  "startTime": "2026-04-03T08:00:00",
+  "endTime": "2026-04-03T09:30:00",
+  "distanceKm": 72.5,
+  "averageSpeed": 48.3,
+  "energyConsumed": 14.2
+}
+
+### Verify vehicle has updated cached IDs after events
+GET http://localhost:5103/api/vehicles/{{vehicleId}}
+Accept: application/json
+
 ###

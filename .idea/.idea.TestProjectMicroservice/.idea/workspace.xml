@@ -23,7 +23,18 @@
     <configurations />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e36ca92a-df90-4831-b385-bb7ea692a822" name="Changes" comment="" />
+    <list default="true" id="e36ca92a-df90-4831-b385-bb7ea692a822" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.TestProjectMicroservice/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TestProjectMicroservice/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ApiGateway/Gateway.API/Gateway.API.http" beforeDir="false" afterPath="$PROJECT_DIR$/src/ApiGateway/Gateway.API/Gateway.API.http" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Services/Battery/Battery.API/Controllers/BatteryController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/Battery/Battery.API/Controllers/BatteryController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Services/Battery/Battery.API/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/Battery/Battery.API/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Services/Location/Location.API/Controllers/LocationsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/Location/Location.API/Controllers/LocationsController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Services/Location/Location.API/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/Location/Location.API/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Services/Trip/Trip.API/Controllers/TripsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/Trip/Trip.API/Controllers/TripsController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Services/Trip/Trip.API/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/Trip/Trip.API/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Services/Vehicle/Vehicle.API/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/Vehicle/Vehicle.API/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Shared/Shared.Kernel/Shared.Kernel.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/src/Shared/Shared.Kernel/Shared.Kernel.csproj" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -46,10 +57,14 @@
 }]]></component>
   <component name="GithubPullRequestsUISettings"><![CDATA[{
   "selectedUrlAndAccountId": {
-    "url": "https://github.com/Gregor1712/TestProjectMicroservice",
+    "url": "https://github.com/Gregor1712/SygicTelematics",
     "accountId": "dc903f26-54bc-4ce4-978a-68b7d5ec2e08"
   }
 }]]></component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/71d1ed3c8b415869f7243ab3f241b707029e768647d1e2161adb67410746e/IPublishEndpoint.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d219c897715f6729f4c5ebba7c4aac113c40e8e9e711c8dea9bc77f41d869/DependencyInjectionRegistrationExtensions.cs" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="KubernetesApiPersistence"><![CDATA[{}]]></component>
   <component name="KubernetesApiProvider"><![CDATA[{
   "isMigrated": true
@@ -333,8 +348,17 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1775201586746</updated>
-      <workItem from="1775201588328" duration="3536000" />
+      <workItem from="1775201588328" duration="9920000" />
     </task>
+    <task id="LOCAL-00001" summary="init">
+      <option name="closed" value="true" />
+      <created>1775206147238</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1775206147238</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -355,6 +379,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+    <MESSAGE value="init" />
+    <option name="LAST_COMMIT_MESSAGE" value="init" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

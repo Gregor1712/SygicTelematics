@@ -1,5 +1,8 @@
+using MassTransit;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Shared.Kernel.Events;
+using Trip.Application.Entities;
 using Trip.Infrastructure.Data;
 
 namespace Trip.API.Controllers;
@@ -9,10 +12,12 @@ namespace Trip.API.Controllers;
 public class TripsController : ControllerBase
 {
     private readonly TripDbContext _context;
+    private readonly IPublishEndpoint _publishEndpoint;
 
-    public TripsController(TripDbContext context)
+    public TripsController(TripDbContext context, IPublishEndpoint publishEndpoint)
     {
         _context = context;
+        _publishEndpoint = publishEndpoint;
     }
 
     [HttpGet]
@@ -30,5 +35,26 @@ public class TripsController : ControllerBase
             .OrderByDescending(x => x.StartTime)
             .ToListAsync();
         return Ok(trips);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Create(TripEntity trip)
+    {
+        trip.Id = Guid.NewGuid();
+
+        _context.Trips.Add(trip);
+        await _context.SaveChangesAsync();
+
+        if (trip.EndTime.HasValue)
+        {
+            await _publishEndpoint.Publish(new TripCompletedEvent
+            {
+                VehicleId = trip.VehicleId,
+                TripId = trip.Id,
+                Timestamp = trip.EndTime.Value
+            });
+        }
+
+        return CreatedAtAction(nameof(GetByVehicle), new { vehicleId = trip.VehicleId }, trip);
     }
 }

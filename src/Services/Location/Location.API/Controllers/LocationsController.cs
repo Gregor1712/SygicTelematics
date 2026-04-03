@@ -1,6 +1,9 @@
+using Location.Application.Entities;
 using Location.Infrastructure.Data;
+using MassTransit;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Shared.Kernel.Events;
 
 namespace Location.API.Controllers;
 
@@ -9,10 +12,12 @@ namespace Location.API.Controllers;
 public class LocationsController : ControllerBase
 {
     private readonly LocationDbContext _context;
+    private readonly IPublishEndpoint _publishEndpoint;
 
-    public LocationsController(LocationDbContext context)
+    public LocationsController(LocationDbContext context, IPublishEndpoint publishEndpoint)
     {
         _context = context;
+        _publishEndpoint = publishEndpoint;
     }
 
     [HttpGet]
@@ -30,5 +35,24 @@ public class LocationsController : ControllerBase
             .OrderByDescending(x => x.Timestamp)
             .ToListAsync();
         return Ok(locations);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Create(LocationEntity location)
+    {
+        location.Id = Guid.NewGuid();
+        location.Timestamp = DateTime.UtcNow;
+
+        _context.Locations.Add(location);
+        await _context.SaveChangesAsync();
+
+        await _publishEndpoint.Publish(new LocationUpdatedEvent
+        {
+            VehicleId = location.VehicleId,
+            LocationId = location.Id,
+            Timestamp = location.Timestamp
+        });
+
+        return CreatedAtAction(nameof(GetByVehicle), new { vehicleId = location.VehicleId }, location);
     }
 }
