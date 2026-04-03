@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(*)",
+      "Read(*)",
+      "Write(*)",
+      "Edit(*)",
+      "Glob(*)",
+      "Grep(*)",
+      "WebFetch(*)",
+      "WebSearch(*)",
+      "Bash(taskkill //F //IM \"Vehicle.API.exe\" 2>/dev/null; taskkill //F //IM \"Location.API.exe\" 2>/dev/null; taskkill //F //IM \"Battery.API.exe\" 2>/dev/null; taskkill //F //IM \"Trip.API.exe\" 2>/dev/null; taskkill //F //IM \"Telemetry.API.exe\" 2>/dev/null; taskkill //F //IM \"Alert.API.exe\" 2>/dev/null; taskkill //F //IM \"Gateway.API.exe\" 2>/dev/null; echo \"done\")",
+      "Bash(cd C:/Users/grego/RiderProjects/SygicTelematics && for svc in Vehicle Location Battery Trip Telemetry Alert; do dotnet ef database drop --project \"src/Services/$svc/$svc.Infrastructure\" --startup-project \"src/Services/$svc/$svc.API\" --force 2>&1 | tail -1; done)"
+    ]
+  }
+}
