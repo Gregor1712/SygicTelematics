@@ -24,9 +24,7 @@
     <configurations />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e36ca92a-df90-4831-b385-bb7ea692a822" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.TestProjectMicroservice/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TestProjectMicroservice/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="e36ca92a-df90-4831-b385-bb7ea692a822" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -60,6 +58,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/71d1ed3c8b415869f7243ab3f241b707029e768647d1e2161adb67410746e/IPublishEndpoint.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/8f779d9303604d539517de15b58c8ecbc90908/_4e192/IAsyncResult.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/8f779d9303604d539517de15b58c8ecbc90908/_bb40f/IDisposable.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/92babe8112867ada958d7443496d6510f9173f428dbe621a94a6d174937/IHttpClientFactory.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/a77b231cea33ff338c41dc7869d6c493d4dae137ff51e342173efa61d933/Task.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b82153efccfb2e82d0f1f2892920706b789f382872aa6045b050f2c8875c1/ConsumeContext.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d219c897715f6729f4c5ebba7c4aac113c40e8e9e711c8dea9bc77f41d869/DependencyInjectionRegistrationExtensions.cs" root0="FORCE_HIGHLIGHTING" />
@@ -360,7 +359,7 @@
       <workItem from="1775225721075" duration="150000" />
       <workItem from="1775225904818" duration="186000" />
       <workItem from="1775226242595" duration="19591000" />
-      <workItem from="1775406359846" duration="942000" />
+      <workItem from="1775406359846" duration="1450000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <option name="closed" value="true" />
@@ -442,7 +441,15 @@
       <option name="project" value="LOCAL" />
       <updated>1775406767123</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="fix">
+      <option name="closed" value="true" />
+      <created>1775407316371</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1775407316371</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -465,7 +472,6 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="init" />
     <MESSAGE value="Update" />
-    <MESSAGE value="fix" />
     <MESSAGE value="add server side filtering, sorting, pagination" />
     <MESSAGE value="add start-all.bat" />
     <MESSAGE value="add Identity service" />
@@ -474,7 +480,8 @@
     <MESSAGE value="add new bff controllers" />
     <MESSAGE value="add new Gateway controllers and YARP (Yet Another Reverse Proxy)" />
     <MESSAGE value="add new Gateway controllers and YARP" />
-    <option name="LAST_COMMIT_MESSAGE" value="add new Gateway controllers and YARP" />
+    <MESSAGE value="fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
