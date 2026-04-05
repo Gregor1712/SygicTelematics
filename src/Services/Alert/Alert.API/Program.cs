@@ -30,6 +30,7 @@ builder.Services.AddMassTransit(x =>
 });
 
 builder.Services.AddScoped<ICsvDataSeeder, CsvDataSeeder>();
+builder.Services.AddScoped<Alert.Application.Interfaces.IEmailService, Alert.Infrastructure.Services.EmailService>();
 builder.Services.AddCors();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

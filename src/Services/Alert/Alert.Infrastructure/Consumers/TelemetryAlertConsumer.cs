@@ -1,4 +1,5 @@
 using Alert.Application.Entities;
+using Alert.Application.Interfaces;
 using Alert.Infrastructure.Data;
 using MassTransit;
 using Shared.Kernel.Events;
@@ -8,10 +9,12 @@ namespace Alert.Infrastructure.Consumers;
 public class TelemetryAlertConsumer : IConsumer<TelemetryAlertEvent>
 {
     private readonly AlertDbContext _context;
+    private readonly IEmailService _emailService;
 
-    public TelemetryAlertConsumer(AlertDbContext context)
+    public TelemetryAlertConsumer(AlertDbContext context, IEmailService emailService)
     {
         _context = context;
+        _emailService = emailService;
     }
 
     public async Task Consume(ConsumeContext<TelemetryAlertEvent> context)
@@ -32,5 +35,14 @@ public class TelemetryAlertConsumer : IConsumer<TelemetryAlertEvent>
         await _context.SaveChangesAsync();
 
         Console.WriteLine($"[Alert] Created {msg.AlertType} alert for vehicle {msg.VehicleId}: {msg.Message}");
+
+        try
+        {
+            await _emailService.SendAlertEmailAsync(msg.AlertType, msg.Message, msg.VehicleId, msg.Timestamp);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"[Email] Failed to send notification: {ex.Message}");
+        }
     }
 }
