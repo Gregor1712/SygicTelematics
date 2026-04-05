@@ -26,14 +26,6 @@
   <component name="ChangeListManager">
     <list default="true" id="e36ca92a-df90-4831-b385-bb7ea692a822" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TestProjectMicroservice/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TestProjectMicroservice/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ApiGateway/Gateway.API/Controllers/BffAlertController.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ApiGateway/Gateway.API/Controllers/BffBatteryController.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ApiGateway/Gateway.API/Controllers/BffLocationController.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ApiGateway/Gateway.API/Controllers/BffTelemetryController.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ApiGateway/Gateway.API/Controllers/BffTripController.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ApiGateway/Gateway.API/Gateway.API.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/src/ApiGateway/Gateway.API/Gateway.API.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ApiGateway/Gateway.API/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/ApiGateway/Gateway.API/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ApiGateway/Gateway.API/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/ApiGateway/Gateway.API/appsettings.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -368,7 +360,7 @@
       <workItem from="1775225721075" duration="150000" />
       <workItem from="1775225904818" duration="186000" />
       <workItem from="1775226242595" duration="19591000" />
-      <workItem from="1775406359846" duration="306000" />
+      <workItem from="1775406359846" duration="942000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <option name="closed" value="true" />
@@ -442,7 +434,15 @@
       <option name="project" value="LOCAL" />
       <updated>1775405642188</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="add new Gateway controllers and YARP (Yet Another Reverse Proxy)">
+      <option name="closed" value="true" />
+      <created>1775406767123</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1775406767123</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -472,7 +472,9 @@
     <MESSAGE value="add telemetry alert consumer" />
     <MESSAGE value="add email notification" />
     <MESSAGE value="add new bff controllers" />
-    <option name="LAST_COMMIT_MESSAGE" value="add new bff controllers" />
+    <MESSAGE value="add new Gateway controllers and YARP (Yet Another Reverse Proxy)" />
+    <MESSAGE value="add new Gateway controllers and YARP" />
+    <option name="LAST_COMMIT_MESSAGE" value="add new Gateway controllers and YARP" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
