@@ -1,73 +1,70 @@
-using System.Text.Json;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Shared.Grpc.Alert;
+using Shared.Grpc.Battery;
+using Shared.Grpc.Location;
+using Shared.Grpc.Telemetry;
+using Shared.Grpc.Trip;
+using Shared.Grpc.Vehicle;
 
 namespace Gateway.API.Controllers;
 
 [ApiController]
 [Route("api/bff/vehicles")]
-public class BffVehicleController(IHttpClientFactory httpClientFactory) : ControllerBase
+public class BffVehicleController(
+    VehicleGrpc.VehicleGrpcClient vehicleClient,
+    LocationGrpc.LocationGrpcClient locationClient,
+    BatteryGrpc.BatteryGrpcClient batteryClient,
+    TripGrpc.TripGrpcClient tripClient,
+    TelemetryGrpc.TelemetryGrpcClient telemetryClient,
+    AlertGrpc.AlertGrpcClient alertClient,
+    IHttpClientFactory httpClientFactory) : ControllerBase
 {
-    private static readonly JsonSerializerOptions JsonOptions = new()
-    {
-        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-        PropertyNameCaseInsensitive = true
-    };
-
     /// <summary>
-    /// Get aggregated vehicle detail with location, battery, last trip, telemetry and alerts
+    /// Get aggregated vehicle detail with location, battery, last trip, telemetry and alerts via gRPC
     /// </summary>
     [HttpGet("{vehicleId:guid}")]
     public async Task<IActionResult> GetVehicleDetail(Guid vehicleId)
     {
-        var vehicleClient = httpClientFactory.CreateClient("VehicleService");
-        var locationClient = httpClientFactory.CreateClient("LocationService");
-        var batteryClient = httpClientFactory.CreateClient("BatteryService");
-        var tripClient = httpClientFactory.CreateClient("TripService");
-        var telemetryClient = httpClientFactory.CreateClient("TelemetryService");
-        var alertClient = httpClientFactory.CreateClient("AlertService");
+        var vehicleIdStr = vehicleId.ToString();
 
-        // Call all services in parallel
-        var vehicleTask = vehicleClient.GetAsync($"/api/vehicles/{vehicleId}");
-        var locationTask = locationClient.GetAsync($"/api/locations/vehicle/{vehicleId}");
-        var batteryTask = batteryClient.GetAsync($"/api/battery/vehicle/{vehicleId}");
-        var tripTask = tripClient.GetAsync($"/api/trips/vehicle/{vehicleId}");
-        var telemetryTask = telemetryClient.GetAsync($"/api/telemetry/vehicle/{vehicleId}");
-        var alertTask = alertClient.GetAsync($"/api/alerts/vehicle/{vehicleId}");
+        // Call all services in parallel via gRPC
+        var vehicleTask = vehicleClient.GetByIdAsync(
+            new Shared.Grpc.Vehicle.VehicleIdRequest { VehicleId = vehicleIdStr }).ResponseAsync;
+        var locationTask = locationClient.GetByVehicleAsync(
+            new Shared.Grpc.Location.VehicleIdRequest { VehicleId = vehicleIdStr }).ResponseAsync;
+        var batteryTask = batteryClient.GetByVehicleAsync(
+            new Shared.Grpc.Battery.VehicleIdRequest { VehicleId = vehicleIdStr }).ResponseAsync;
+        var tripTask = tripClient.GetByVehicleAsync(
+            new Shared.Grpc.Trip.VehicleIdRequest { VehicleId = vehicleIdStr }).ResponseAsync;
+        var telemetryTask = telemetryClient.GetByVehicleAsync(
+            new Shared.Grpc.Telemetry.VehicleIdRequest { VehicleId = vehicleIdStr }).ResponseAsync;
+        var alertTask = alertClient.GetByVehicleAsync(
+            new Shared.Grpc.Alert.VehicleIdRequest { VehicleId = vehicleIdStr }).ResponseAsync;
 
         await Task.WhenAll(vehicleTask, locationTask, batteryTask, tripTask, telemetryTask, alertTask);
 
-        var vehicleResponse = await vehicleTask;
-        if (!vehicleResponse.IsSuccessStatusCode)
-            return NotFound(new { message = "Vehicle not found" });
-
-        var vehicle = await ReadJson(vehicleResponse);
-        var locations = await ReadJson(await locationTask);
-        var batteryStatuses = await ReadJson(await batteryTask);
-        var trips = await ReadJson(await tripTask);
-        var telemetryRecords = await ReadJson(await telemetryTask);
-        var alerts = await ReadJson(await alertTask);
-
         var result = new
         {
-            vehicle,
-            location = locations,
-            battery = batteryStatuses,
-            trips,
-            telemetry = telemetryRecords,
-            alerts
+            vehicle = await vehicleTask,
+            location = (await locationTask).Locations,
+            battery = (await batteryTask).Statuses,
+            trips = (await tripTask).Trips,
+            telemetry = (await telemetryTask).Records,
+            alerts = (await alertTask).Alerts
         };
 
         return Ok(result);
     }
 
-    //[Authorize(Policy = "RequireUserRole")]
+    /// <summary>
+    /// Get all vehicles with filtering, sorting and pagination (HTTP forwarding for complex query binding)
+    /// </summary>
     [HttpGet]
     public async Task<IActionResult> GetAllVehicles()
     {
-        var vehicleClient = httpClientFactory.CreateClient("VehicleService");
+        var client = httpClientFactory.CreateClient("VehicleService");
         var queryString = Request.QueryString.Value ?? "";
-        var response = await vehicleClient.GetAsync($"/api/vehicles{queryString}");
+        var response = await client.GetAsync($"/api/vehicles{queryString}");
 
         if (!response.IsSuccessStatusCode)
             return StatusCode((int)response.StatusCode);
@@ -79,15 +76,5 @@ public class BffVehicleController(IHttpClientFactory httpClientFactory) : Contro
             ContentType = "application/json",
             StatusCode = (int)response.StatusCode
         };
-    }
-
-    private static async Task<JsonElement?> ReadJson(HttpResponseMessage response)
-    {
-        if (!response.IsSuccessStatusCode) return null;
-
-        var content = await response.Content.ReadAsStringAsync();
-        if (string.IsNullOrWhiteSpace(content)) return null;
-
-        return JsonSerializer.Deserialize<JsonElement>(content, JsonOptions);
     }
 }

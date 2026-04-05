@@ -10,6 +10,7 @@
     <ItemGroup>
         <ProjectReference Include="..\Alert.Application\Alert.Application.csproj" />
         <ProjectReference Include="..\Alert.Infrastructure\Alert.Infrastructure.csproj" />
+        <ProjectReference Include="..\..\..\Shared\Shared.Grpc\Shared.Grpc.csproj" />
     </ItemGroup>
 
     <ItemGroup>

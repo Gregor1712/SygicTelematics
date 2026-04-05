@@ -10,6 +10,7 @@
     <ItemGroup>
         <ProjectReference Include="..\Telemetry.Application\Telemetry.Application.csproj" />
         <ProjectReference Include="..\Telemetry.Infrastructure\Telemetry.Infrastructure.csproj" />
+        <ProjectReference Include="..\..\..\Shared\Shared.Grpc\Shared.Grpc.csproj" />
     </ItemGroup>
 
     <ItemGroup>

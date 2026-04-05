@@ -1,52 +1,48 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Shared.Grpc.Alert;
+using Shared.Grpc.Battery;
+using Shared.Grpc.Location;
+using Shared.Grpc.Telemetry;
+using Shared.Grpc.Trip;
+using Shared.Grpc.Vehicle;
 using Shared.Kernel.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// HttpClients only for custom controllers (Account + Vehicle aggregation)
+// HttpClient for Identity (cookie/header forwarding — not suitable for gRPC)
 builder.Services.AddHttpClient("IdentityService", client =>
 {
     client.BaseAddress = new Uri(builder.Configuration["ServiceUrls:Identity"]
         ?? "http://localhost:5101");
 });
 
+// HttpClient for Vehicle GetAll (complex query-string filter forwarding)
 builder.Services.AddHttpClient("VehicleService", client =>
 {
-    client.BaseAddress = new Uri(builder.Configuration["ServiceUrls:Vehicle"]
+    client.BaseAddress = new Uri(builder.Configuration["GrpcUrls:Vehicle"]
         ?? "http://localhost:5103");
 });
 
-builder.Services.AddHttpClient("LocationService", client =>
-{
-    client.BaseAddress = new Uri(builder.Configuration["ServiceUrls:Location"]
-        ?? "http://localhost:5104");
-});
+// gRPC clients for internal service-to-service calls (low latency)
+builder.Services.AddGrpcClient<VehicleGrpc.VehicleGrpcClient>(o =>
+    o.Address = new Uri(builder.Configuration["GrpcUrls:Vehicle"] ?? "http://localhost:5103"));
 
-builder.Services.AddHttpClient("BatteryService", client =>
-{
-    client.BaseAddress = new Uri(builder.Configuration["ServiceUrls:Battery"]
-        ?? "http://localhost:5105");
-});
+builder.Services.AddGrpcClient<LocationGrpc.LocationGrpcClient>(o =>
+    o.Address = new Uri(builder.Configuration["GrpcUrls:Location"] ?? "http://localhost:5104"));
 
-builder.Services.AddHttpClient("TripService", client =>
-{
-    client.BaseAddress = new Uri(builder.Configuration["ServiceUrls:Trip"]
-        ?? "http://localhost:5106");
-});
+builder.Services.AddGrpcClient<BatteryGrpc.BatteryGrpcClient>(o =>
+    o.Address = new Uri(builder.Configuration["GrpcUrls:Battery"] ?? "http://localhost:5105"));
 
-builder.Services.AddHttpClient("TelemetryService", client =>
-{
-    client.BaseAddress = new Uri(builder.Configuration["ServiceUrls:Telemetry"]
-        ?? "http://localhost:5107");
-});
+builder.Services.AddGrpcClient<TripGrpc.TripGrpcClient>(o =>
+    o.Address = new Uri(builder.Configuration["GrpcUrls:Trip"] ?? "http://localhost:5106"));
 
-builder.Services.AddHttpClient("AlertService", client =>
-{
-    client.BaseAddress = new Uri(builder.Configuration["ServiceUrls:Alert"]
-        ?? "http://localhost:5108");
-});
+builder.Services.AddGrpcClient<TelemetryGrpc.TelemetryGrpcClient>(o =>
+    o.Address = new Uri(builder.Configuration["GrpcUrls:Telemetry"] ?? "http://localhost:5107"));
+
+builder.Services.AddGrpcClient<AlertGrpc.AlertGrpcClient>(o =>
+    o.Address = new Uri(builder.Configuration["GrpcUrls:Alert"] ?? "http://localhost:5108"));
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>

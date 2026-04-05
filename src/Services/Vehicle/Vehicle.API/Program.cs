@@ -33,6 +33,7 @@ builder.Services.AddMassTransit(x =>
 
 builder.Services.AddScoped<ICsvDataSeeder, CsvDataSeeder>();
 builder.Services.AddScoped<Vehicle.Application.Interfaces.IServerService, Vehicle.Infrastructure.Services.ServerService>();
+builder.Services.AddGrpc();
 builder.Services.AddCors();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -64,6 +65,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.MapGrpcService<Vehicle.API.GrpcServices.VehicleGrpcService>();
 app.MapControllers();
 app.MapHealthChecks("/health");
 

@@ -10,6 +10,7 @@
     <ItemGroup>
         <ProjectReference Include="..\Vehicle.Application\Vehicle.Application.csproj" />
         <ProjectReference Include="..\Vehicle.Infrastructure\Vehicle.Infrastructure.csproj" />
+        <ProjectReference Include="..\..\..\Shared\Shared.Grpc\Shared.Grpc.csproj" />
     </ItemGroup>
 
     <ItemGroup>

@@ -10,6 +10,7 @@
     <ItemGroup>
         <ProjectReference Include="..\Battery.Application\Battery.Application.csproj" />
         <ProjectReference Include="..\Battery.Infrastructure\Battery.Infrastructure.csproj" />
+        <ProjectReference Include="..\..\..\Shared\Shared.Grpc\Shared.Grpc.csproj" />
     </ItemGroup>
 
     <ItemGroup>

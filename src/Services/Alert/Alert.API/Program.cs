@@ -31,6 +31,7 @@ builder.Services.AddMassTransit(x =>
 
 builder.Services.AddScoped<ICsvDataSeeder, CsvDataSeeder>();
 builder.Services.AddScoped<Alert.Application.Interfaces.IEmailService, Alert.Infrastructure.Services.EmailService>();
+builder.Services.AddGrpc();
 builder.Services.AddCors();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -62,6 +63,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.MapGrpcService<Alert.API.GrpcServices.AlertGrpcService>();
 app.MapControllers();
 app.MapHealthChecks("/health");
 

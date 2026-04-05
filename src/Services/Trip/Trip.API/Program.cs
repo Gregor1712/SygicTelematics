@@ -25,6 +25,7 @@ builder.Services.AddMassTransit(x =>
 });
 
 builder.Services.AddScoped<ICsvDataSeeder, CsvDataSeeder>();
+builder.Services.AddGrpc();
 builder.Services.AddCors();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -56,6 +57,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.MapGrpcService<Trip.API.GrpcServices.TripGrpcService>();
 app.MapControllers();
 app.MapHealthChecks("/health");
 

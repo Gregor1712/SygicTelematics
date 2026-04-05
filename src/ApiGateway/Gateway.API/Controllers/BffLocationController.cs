@@ -1,38 +1,23 @@
-using System.Text;
-using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
+using Shared.Grpc.Location;
 
 namespace Gateway.API.Controllers;
 
 [ApiController]
 [Route("api/bff/locations")]
-public class BffLocationController(IHttpClientFactory httpClientFactory) : ControllerBase
+public class BffLocationController(LocationGrpc.LocationGrpcClient client) : ControllerBase
 {
     [HttpGet("vehicle/{vehicleId:guid}")]
     public async Task<IActionResult> GetByVehicle(Guid vehicleId)
     {
-        var client = httpClientFactory.CreateClient("LocationService");
-        var response = await client.GetAsync($"/api/locations/vehicle/{vehicleId}");
-        return await ForwardResponse(response);
+        var reply = await client.GetByVehicleAsync(new VehicleIdRequest { VehicleId = vehicleId.ToString() });
+        return Ok(reply.Locations);
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] JsonElement body)
+    public async Task<IActionResult> Create([FromBody] CreateLocationRequest request)
     {
-        var client = httpClientFactory.CreateClient("LocationService");
-        var content = new StringContent(body.GetRawText(), Encoding.UTF8, "application/json");
-        var response = await client.PostAsync("/api/locations", content);
-        return await ForwardResponse(response);
-    }
-
-    private static async Task<IActionResult> ForwardResponse(HttpResponseMessage response)
-    {
-        var responseContent = await response.Content.ReadAsStringAsync();
-        return new ContentResult
-        {
-            Content = responseContent,
-            ContentType = "application/json",
-            StatusCode = (int)response.StatusCode
-        };
+        var reply = await client.CreateAsync(request);
+        return CreatedAtAction(nameof(GetByVehicle), new { vehicleId = reply.VehicleId }, reply);
     }
 }

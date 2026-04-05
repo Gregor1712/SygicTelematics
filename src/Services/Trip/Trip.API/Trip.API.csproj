@@ -10,6 +10,7 @@
     <ItemGroup>
         <ProjectReference Include="..\Trip.Application\Trip.Application.csproj" />
         <ProjectReference Include="..\Trip.Infrastructure\Trip.Infrastructure.csproj" />
+        <ProjectReference Include="..\..\..\Shared\Shared.Grpc\Shared.Grpc.csproj" />
     </ItemGroup>
 
     <ItemGroup>

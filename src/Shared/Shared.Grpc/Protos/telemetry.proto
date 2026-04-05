@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+option csharp_namespace = "Shared.Grpc.Telemetry";
+
+package telemetry;
+
+import "google/protobuf/timestamp.proto";
+
+service TelemetryGrpc {
+  rpc GetByVehicle (VehicleIdRequest) returns (TelemetryListReply);
+  rpc Create (CreateTelemetryRequest) returns (TelemetryReply);
+}
+
+message VehicleIdRequest {
+  string vehicle_id = 1;
+}
+
+message CreateTelemetryRequest {
+  string vehicle_id = 1;
+  string type = 2;
+  double value = 3;
+}
+
+message TelemetryReply {
+  string id = 1;
+  string vehicle_id = 2;
+  string type = 3;
+  double value = 4;
+  google.protobuf.Timestamp timestamp = 5;
+}
+
+message TelemetryListReply {
+  repeated TelemetryReply records = 1;
+}
