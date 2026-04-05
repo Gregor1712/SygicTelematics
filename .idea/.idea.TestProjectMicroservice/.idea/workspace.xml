@@ -26,10 +26,7 @@
   <component name="ChangeListManager">
     <list default="true" id="e36ca92a-df90-4831-b385-bb7ea692a822" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TestProjectMicroservice/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TestProjectMicroservice/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Services/Alert/Alert.API/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/Alert/Alert.API/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Services/Alert/Alert.API/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/Alert/Alert.API/appsettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Services/Alert/Alert.Infrastructure/Alert.Infrastructure.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/Alert/Alert.Infrastructure/Alert.Infrastructure.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Services/Alert/Alert.Infrastructure/Consumers/TelemetryAlertConsumer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/Alert/Alert.Infrastructure/Consumers/TelemetryAlertConsumer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ApiGateway/Gateway.API/Controllers/BffVehicleController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/ApiGateway/Gateway.API/Controllers/BffVehicleController.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,7 +57,11 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/1d8b23e1e431b24cf7c1dfb82e9beaa902041dd7e3da0f56c5991144595/AuthorizeAttribute.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/382ff0bd29dac925c9d16054587110b23c55cbba68d5ad4b36facf90ee7190b5/IConsumer.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/6f90c6c13479b8c2a5be98f3d75dfc3bd885a055652d8a32904ca2448132949e/Future.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/71d1ed3c8b415869f7243ab3f241b707029e768647d1e2161adb67410746e/IPublishEndpoint.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/8f779d9303604d539517de15b58c8ecbc90908/_4e192/IAsyncResult.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/8f779d9303604d539517de15b58c8ecbc90908/_bb40f/IDisposable.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/a77b231cea33ff338c41dc7869d6c493d4dae137ff51e342173efa61d933/Task.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b82153efccfb2e82d0f1f2892920706b789f382872aa6045b050f2c8875c1/ConsumeContext.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d219c897715f6729f4c5ebba7c4aac113c40e8e9e711c8dea9bc77f41d869/DependencyInjectionRegistrationExtensions.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/fb693663d6e9a7e9b7e2926fd43ccff9c59647ba372d26ca8134994f81f97c15/AuthorizationPolicyBuilder.cs" root0="FORCE_HIGHLIGHTING" />
@@ -359,7 +360,7 @@
       <workItem from="1775225509242" duration="196000" />
       <workItem from="1775225721075" duration="150000" />
       <workItem from="1775225904818" duration="186000" />
-      <workItem from="1775226242595" duration="17022000" />
+      <workItem from="1775226242595" duration="18776000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <option name="closed" value="true" />
@@ -417,7 +418,15 @@
       <option name="project" value="LOCAL" />
       <updated>1775381616418</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="add email notification">
+      <option name="closed" value="true" />
+      <created>1775403526642</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1775403526642</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -445,7 +454,8 @@
     <MESSAGE value="add start-all.bat" />
     <MESSAGE value="add Identity service" />
     <MESSAGE value="add telemetry alert consumer" />
-    <option name="LAST_COMMIT_MESSAGE" value="add telemetry alert consumer" />
+    <MESSAGE value="add email notification" />
+    <option name="LAST_COMMIT_MESSAGE" value="add email notification" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

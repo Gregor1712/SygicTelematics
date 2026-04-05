@@ -61,10 +61,7 @@ public class BffVehicleController(IHttpClientFactory httpClientFactory) : Contro
         return Ok(result);
     }
 
-    /// <summary>
-    /// Get all vehicles with their latest location and battery status
-    /// </summary>
-    [Authorize(Policy = "RequireUserRole")]
+    //[Authorize(Policy = "RequireUserRole")]
     [HttpGet]
     public async Task<IActionResult> GetAllVehicles()
     {
