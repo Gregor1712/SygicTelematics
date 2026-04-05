@@ -5,6 +5,7 @@ using Shared.Kernel.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// HttpClients only for custom controllers (Account + Vehicle aggregation)
 builder.Services.AddHttpClient("IdentityService", client =>
 {
     client.BaseAddress = new Uri(builder.Configuration["ServiceUrls:Identity"]
@@ -79,6 +80,10 @@ builder.Services.AddOpenApiDocument(config =>
     };
 });
 
+// YARP Reverse Proxy
+builder.Services.AddReverseProxy()
+    .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
+
 builder.Services.AddCors();
 builder.Services.AddHealthChecks();
 
@@ -101,6 +106,7 @@ if (app.Environment.IsDevelopment())
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+app.MapReverseProxy();
 app.MapHealthChecks("/health");
 
 app.Run();
