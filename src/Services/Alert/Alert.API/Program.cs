@@ -1,6 +1,8 @@
 using Alert.Application.Interfaces;
+using Alert.Infrastructure.Consumers;
 using Alert.Infrastructure.Data;
 using Alert.Infrastructure.Services;
+using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Shared.Kernel.Middleware;
 
@@ -10,6 +12,22 @@ builder.Configuration.AddJsonFile("appsettings.Development.json", optional: true
 
 builder.Services.AddDbContext<AlertDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddMassTransit(x =>
+{
+    x.AddConsumer<TelemetryAlertConsumer>();
+
+    x.UsingRabbitMq((context, cfg) =>
+    {
+        cfg.Host(builder.Configuration["RabbitMQ:Host"] ?? "localhost", "/", h =>
+        {
+            h.Username(builder.Configuration["RabbitMQ:Username"] ?? "guest");
+            h.Password(builder.Configuration["RabbitMQ:Password"] ?? "guest");
+        });
+
+        cfg.ConfigureEndpoints(context);
+    });
+});
 
 builder.Services.AddScoped<ICsvDataSeeder, CsvDataSeeder>();
 builder.Services.AddCors();

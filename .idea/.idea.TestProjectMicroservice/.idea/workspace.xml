@@ -26,11 +26,6 @@
   <component name="ChangeListManager">
     <list default="true" id="e36ca92a-df90-4831-b385-bb7ea692a822" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TestProjectMicroservice/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TestProjectMicroservice/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TestProjectMicroservice.slnx" beforeDir="false" afterPath="$PROJECT_DIR$/TestProjectMicroservice.slnx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ApiGateway/Gateway.API/Controllers/BffVehicleController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/ApiGateway/Gateway.API/Controllers/BffVehicleController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ApiGateway/Gateway.API/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/ApiGateway/Gateway.API/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ApiGateway/Gateway.API/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/ApiGateway/Gateway.API/appsettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/start-all.bat" beforeDir="false" afterPath="$PROJECT_DIR$/start-all.bat" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,46 +82,33 @@
     <option name="openDirectoriesWithSingleClick" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    ".NET Launch Settings Profile.Catalog.API: http.executor": "Run",
-    ".NET Project.Vehicle.API.executor": "Debug",
-    "HTTP Request.All in Gateway.API.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.MCP Project settings loaded": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.readMode.enableVisualFormatting": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "cidr.known.project.marker": "true",
-    "codeWithMe.voiceChat.enabledByDefault": "false",
-    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "master",
-    "junie.onboarding.icon.badge.shown": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "to.speed.mode.migration.done": "true",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;.NET Launch Settings Profile.Catalog.API: http.executor&quot;: &quot;Run&quot;,
+    &quot;.NET Project.Vehicle.API.executor&quot;: &quot;Debug&quot;,
+    &quot;HTTP Request.All in Gateway.API.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
-  <component name="RunDashboard">
-    <option name="configurationStatuses">
-      <map>
-        <entry key="HttpClient.HttpRequestRunConfigurationType">
-          <value>
-            <map>
-              <entry key="All in Gateway.API" value="STOPPED" />
-            </map>
-          </value>
-        </entry>
-      </map>
-    </option>
-  </component>
+}</component>
   <component name="RunManager" selected=".NET Project.Vehicle.API">
     <configuration name="Alert.API" type="DotNetProject" factoryName=".NET Project">
       <option name="EXE_PATH" value="" />
@@ -371,7 +353,7 @@
       <workItem from="1775225509242" duration="196000" />
       <workItem from="1775225721075" duration="150000" />
       <workItem from="1775225904818" duration="186000" />
-      <workItem from="1775226242595" duration="12162000" />
+      <workItem from="1775226242595" duration="13531000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <option name="closed" value="true" />
@@ -413,7 +395,15 @@
       <option name="project" value="LOCAL" />
       <updated>1775232003121</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="add Identity service">
+      <option name="closed" value="true" />
+      <created>1775379965430</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1775379965430</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -439,7 +429,8 @@
     <MESSAGE value="fix" />
     <MESSAGE value="add server side filtering, sorting, pagination" />
     <MESSAGE value="add start-all.bat" />
-    <option name="LAST_COMMIT_MESSAGE" value="add start-all.bat" />
+    <MESSAGE value="add Identity service" />
+    <option name="LAST_COMMIT_MESSAGE" value="add Identity service" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

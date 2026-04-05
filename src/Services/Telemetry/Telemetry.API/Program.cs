@@ -1,3 +1,4 @@
+using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Shared.Kernel.Middleware;
 using Telemetry.Application.Interfaces;
@@ -10,6 +11,20 @@ builder.Configuration.AddJsonFile("appsettings.Development.json", optional: true
 
 builder.Services.AddDbContext<TelemetryDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddMassTransit(x =>
+{
+    x.UsingRabbitMq((context, cfg) =>
+    {
+        cfg.Host(builder.Configuration["RabbitMQ:Host"] ?? "localhost", "/", h =>
+        {
+            h.Username(builder.Configuration["RabbitMQ:Username"] ?? "guest");
+            h.Password(builder.Configuration["RabbitMQ:Password"] ?? "guest");
+        });
+
+        cfg.ConfigureEndpoints(context);
+    });
+});
 
 builder.Services.AddScoped<ICsvDataSeeder, CsvDataSeeder>();
 builder.Services.AddCors();
