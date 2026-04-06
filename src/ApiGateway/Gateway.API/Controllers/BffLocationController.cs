@@ -1,3 +1,4 @@
+using Gateway.API.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Grpc.Location;
 
@@ -11,13 +12,13 @@ public class BffLocationController(LocationGrpc.LocationGrpcClient client) : Con
     public async Task<IActionResult> GetByVehicle(Guid vehicleId)
     {
         var reply = await client.GetByVehicleAsync(new VehicleIdRequest { VehicleId = vehicleId.ToString() });
-        return Ok(reply.Locations);
+        return this.ProtoJson(reply);
     }
 
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateLocationRequest request)
     {
         var reply = await client.CreateAsync(request);
-        return CreatedAtAction(nameof(GetByVehicle), new { vehicleId = reply.VehicleId }, reply);
+        return this.ProtoJsonCreated(reply);
     }
 }

@@ -1,3 +1,4 @@
+using Gateway.API.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Grpc.Alert;
 
@@ -11,6 +12,6 @@ public class BffAlertController(AlertGrpc.AlertGrpcClient client) : ControllerBa
     public async Task<IActionResult> GetByVehicle(Guid vehicleId)
     {
         var reply = await client.GetByVehicleAsync(new VehicleIdRequest { VehicleId = vehicleId.ToString() });
-        return Ok(reply.Alerts);
+        return this.ProtoJson(reply);
     }
 }

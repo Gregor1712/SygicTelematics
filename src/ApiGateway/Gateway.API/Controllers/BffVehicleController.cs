@@ -1,3 +1,4 @@
+using Gateway.API.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Grpc.Alert;
 using Shared.Grpc.Battery;
@@ -43,17 +44,28 @@ public class BffVehicleController(
 
         await Task.WhenAll(vehicleTask, locationTask, batteryTask, tripTask, telemetryTask, alertTask);
 
-        var result = new
-        {
-            vehicle = await vehicleTask,
-            location = (await locationTask).Locations,
-            battery = (await batteryTask).Statuses,
-            trips = (await tripTask).Trips,
-            telemetry = (await telemetryTask).Records,
-            alerts = (await alertTask).Alerts
-        };
+        var vehicle = await vehicleTask;
+        var locations = await locationTask;
+        var battery = await batteryTask;
+        var trips = await tripTask;
+        var telemetry = await telemetryTask;
+        var alerts = await alertTask;
 
-        return Ok(result);
+        var json = "{"
+            + $"\"vehicle\":{ProtobufJsonExtensions.FormatMessage(vehicle)},"
+            + $"\"location\":{ProtobufJsonExtensions.FormatList(locations.Locations)},"
+            + $"\"battery\":{ProtobufJsonExtensions.FormatList(battery.Statuses)},"
+            + $"\"trips\":{ProtobufJsonExtensions.FormatList(trips.Trips)},"
+            + $"\"telemetry\":{ProtobufJsonExtensions.FormatList(telemetry.Records)},"
+            + $"\"alerts\":{ProtobufJsonExtensions.FormatList(alerts.Alerts)}"
+            + "}";
+
+        return new ContentResult
+        {
+            Content = json,
+            ContentType = "application/json",
+            StatusCode = 200
+        };
     }
 
     /// <summary>

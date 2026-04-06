@@ -1,3 +1,4 @@
+using Gateway.API.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Grpc.Battery;
 
@@ -11,13 +12,13 @@ public class BffBatteryController(BatteryGrpc.BatteryGrpcClient client) : Contro
     public async Task<IActionResult> GetByVehicle(Guid vehicleId)
     {
         var reply = await client.GetByVehicleAsync(new VehicleIdRequest { VehicleId = vehicleId.ToString() });
-        return Ok(reply.Statuses);
+        return this.ProtoJson(reply);
     }
 
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateBatteryRequest request)
     {
         var reply = await client.CreateAsync(request);
-        return CreatedAtAction(nameof(GetByVehicle), new { vehicleId = reply.VehicleId }, reply);
+        return this.ProtoJsonCreated(reply);
     }
 }

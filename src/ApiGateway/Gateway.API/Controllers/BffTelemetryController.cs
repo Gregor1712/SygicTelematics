@@ -1,3 +1,4 @@
+using Gateway.API.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Grpc.Telemetry;
 
@@ -11,13 +12,13 @@ public class BffTelemetryController(TelemetryGrpc.TelemetryGrpcClient client) : 
     public async Task<IActionResult> GetByVehicle(Guid vehicleId)
     {
         var reply = await client.GetByVehicleAsync(new VehicleIdRequest { VehicleId = vehicleId.ToString() });
-        return Ok(reply.Records);
+        return this.ProtoJson(reply);
     }
 
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateTelemetryRequest request)
     {
         var reply = await client.CreateAsync(request);
-        return CreatedAtAction(nameof(GetByVehicle), new { vehicleId = reply.VehicleId }, reply);
+        return this.ProtoJsonCreated(reply);
     }
 }
