@@ -9,7 +9,12 @@ using Telemetry.Infrastructure.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.WebHost.ConfigureKestrel(o =>
-    o.ConfigureEndpointDefaults(lo => lo.Protocols = HttpProtocols.Http1AndHttp2));
+{
+    var httpPort = builder.Configuration.GetValue("HttpPort", 5107);
+    var grpcPort = builder.Configuration.GetValue("GrpcPort", 6107);
+    o.ListenLocalhost(httpPort, lo => lo.Protocols = HttpProtocols.Http1);
+    o.ListenLocalhost(grpcPort, lo => lo.Protocols = HttpProtocols.Http2);
+});
 
 builder.Configuration.AddJsonFile("appsettings.Development.json", optional: true);
 

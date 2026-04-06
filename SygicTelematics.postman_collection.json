@@ -1,0 +1,320 @@
+{
+  "info": {
+    "name": "Sygic Telematics - GraphQL",
+    "_postman_id": "sygic-telematics-graphql",
+    "description": "GraphQL queries and mutations for Sygic Telematics Gateway API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5100",
+      "type": "string"
+    },
+    {
+      "key": "vehicleId",
+      "value": "00000000-0000-0000-0000-000000000001",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Queries",
+      "item": [
+        {
+          "name": "GetVehicle (full detail)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/graphql",
+              "host": ["{{baseUrl}}"],
+              "path": ["graphql"]
+            },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query GetVehicle($id: UUID!) {\n  vehicle(id: $id) {\n    vehicle {\n      id\n      vin\n      model\n      manufacturer\n      year\n      currentLocationId\n      batteryStatusId\n      lastTripId\n    }\n    locations {\n      id\n      vehicleId\n      latitude\n      longitude\n      speed\n      timestamp\n    }\n    battery {\n      id\n      vehicleId\n      percentage\n      voltage\n      temperature\n      isCharging\n      timestamp\n    }\n    trips {\n      id\n      vehicleId\n      startTime\n      endTime\n      distanceKm\n      averageSpeed\n      fuelConsumed\n      energyConsumed\n      startLocationId\n      endLocationId\n    }\n    telemetry {\n      id\n      vehicleId\n      type\n      value\n      timestamp\n    }\n    alerts {\n      id\n      vehicleId\n      type\n      message\n      isResolved\n      createdAt\n    }\n  }\n}",
+                "variables": "{\n  \"id\": \"{{vehicleId}}\"\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "GetVehicle (vehicle only)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/graphql",
+              "host": ["{{baseUrl}}"],
+              "path": ["graphql"]
+            },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query GetVehicle($id: UUID!) {\n  vehicle(id: $id) {\n    vehicle {\n      id\n      vin\n      model\n      manufacturer\n      year\n    }\n  }\n}",
+                "variables": "{\n  \"id\": \"{{vehicleId}}\"\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "GetLocations",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/graphql",
+              "host": ["{{baseUrl}}"],
+              "path": ["graphql"]
+            },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query GetLocations($vehicleId: UUID!) {\n  locations(vehicleId: $vehicleId) {\n    id\n    vehicleId\n    latitude\n    longitude\n    speed\n    timestamp\n  }\n}",
+                "variables": "{\n  \"vehicleId\": \"{{vehicleId}}\"\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "GetBattery",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/graphql",
+              "host": ["{{baseUrl}}"],
+              "path": ["graphql"]
+            },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query GetBattery($vehicleId: UUID!) {\n  battery(vehicleId: $vehicleId) {\n    id\n    vehicleId\n    percentage\n    voltage\n    temperature\n    isCharging\n    timestamp\n  }\n}",
+                "variables": "{\n  \"vehicleId\": \"{{vehicleId}}\"\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "GetTrips",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/graphql",
+              "host": ["{{baseUrl}}"],
+              "path": ["graphql"]
+            },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query GetTrips($vehicleId: UUID!) {\n  trips(vehicleId: $vehicleId) {\n    id\n    vehicleId\n    startTime\n    endTime\n    distanceKm\n    averageSpeed\n    fuelConsumed\n    energyConsumed\n    startLocationId\n    endLocationId\n  }\n}",
+                "variables": "{\n  \"vehicleId\": \"{{vehicleId}}\"\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "GetTelemetry",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/graphql",
+              "host": ["{{baseUrl}}"],
+              "path": ["graphql"]
+            },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query GetTelemetry($vehicleId: UUID!) {\n  telemetry(vehicleId: $vehicleId) {\n    id\n    vehicleId\n    type\n    value\n    timestamp\n  }\n}",
+                "variables": "{\n  \"vehicleId\": \"{{vehicleId}}\"\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "GetAlerts",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/graphql",
+              "host": ["{{baseUrl}}"],
+              "path": ["graphql"]
+            },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query GetAlerts($vehicleId: UUID!) {\n  alerts(vehicleId: $vehicleId) {\n    id\n    vehicleId\n    type\n    message\n    isResolved\n    createdAt\n  }\n}",
+                "variables": "{\n  \"vehicleId\": \"{{vehicleId}}\"\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "Introspection - Schema",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/graphql",
+              "host": ["{{baseUrl}}"],
+              "path": ["graphql"]
+            },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "{\n  __schema {\n    queryType { name }\n    mutationType { name }\n    types {\n      name\n      kind\n      fields {\n        name\n        type {\n          name\n          kind\n        }\n      }\n    }\n  }\n}",
+                "variables": ""
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Mutations",
+      "item": [
+        {
+          "name": "CreateLocation",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/graphql",
+              "host": ["{{baseUrl}}"],
+              "path": ["graphql"]
+            },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation CreateLocation($input: CreateLocationInput!) {\n  createLocation(input: $input) {\n    id\n    vehicleId\n    latitude\n    longitude\n    speed\n    timestamp\n  }\n}",
+                "variables": "{\n  \"input\": {\n    \"vehicleId\": \"{{vehicleId}}\",\n    \"latitude\": 48.1486,\n    \"longitude\": 17.1077,\n    \"speed\": 60.5\n  }\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "CreateBattery",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/graphql",
+              "host": ["{{baseUrl}}"],
+              "path": ["graphql"]
+            },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation CreateBattery($input: CreateBatteryInput!) {\n  createBattery(input: $input) {\n    id\n    vehicleId\n    percentage\n    voltage\n    temperature\n    isCharging\n    timestamp\n  }\n}",
+                "variables": "{\n  \"input\": {\n    \"vehicleId\": \"{{vehicleId}}\",\n    \"percentage\": 85,\n    \"voltage\": 400.5,\n    \"isCharging\": true,\n    \"temperature\": 25.3\n  }\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "CreateTelemetry",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/graphql",
+              "host": ["{{baseUrl}}"],
+              "path": ["graphql"]
+            },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation CreateTelemetry($input: CreateTelemetryInput!) {\n  createTelemetry(input: $input) {\n    id\n    vehicleId\n    type\n    value\n    timestamp\n  }\n}",
+                "variables": "{\n  \"input\": {\n    \"vehicleId\": \"{{vehicleId}}\",\n    \"type\": \"engine_rpm\",\n    \"value\": 3500.0\n  }\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "CreateTrip",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/graphql",
+              "host": ["{{baseUrl}}"],
+              "path": ["graphql"]
+            },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation CreateTrip($input: CreateTripInput!) {\n  createTrip(input: $input) {\n    id\n    vehicleId\n    startTime\n    endTime\n    distanceKm\n    averageSpeed\n    fuelConsumed\n    energyConsumed\n    startLocationId\n    endLocationId\n  }\n}",
+                "variables": "{\n  \"input\": {\n    \"vehicleId\": \"{{vehicleId}}\",\n    \"startTime\": \"2026-04-06T08:00:00Z\",\n    \"endTime\": \"2026-04-06T09:30:00Z\",\n    \"distanceKm\": 45.2,\n    \"averageSpeed\": 30.1,\n    \"fuelConsumed\": 3.5,\n    \"energyConsumed\": null,\n    \"startLocationId\": null,\n    \"endLocationId\": null\n  }\n}"
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

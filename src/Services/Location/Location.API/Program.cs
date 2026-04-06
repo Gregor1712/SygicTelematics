@@ -9,7 +9,12 @@ using Shared.Kernel.Middleware;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.WebHost.ConfigureKestrel(o =>
-    o.ConfigureEndpointDefaults(lo => lo.Protocols = HttpProtocols.Http1AndHttp2));
+{
+    var httpPort = builder.Configuration.GetValue("HttpPort", 5104);
+    var grpcPort = builder.Configuration.GetValue("GrpcPort", 6104);
+    o.ListenLocalhost(httpPort, lo => lo.Protocols = HttpProtocols.Http1);
+    o.ListenLocalhost(grpcPort, lo => lo.Protocols = HttpProtocols.Http2);
+});
 
 builder.Configuration.AddJsonFile("appsettings.Development.json", optional: true);
 
