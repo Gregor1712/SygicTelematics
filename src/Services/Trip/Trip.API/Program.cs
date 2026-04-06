@@ -1,4 +1,5 @@
 using MassTransit;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.EntityFrameworkCore;
 using Shared.Kernel.Middleware;
 using Trip.Application.Interfaces;
@@ -6,6 +7,9 @@ using Trip.Infrastructure.Data;
 using Trip.Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.WebHost.ConfigureKestrel(o =>
+    o.ConfigureEndpointDefaults(lo => lo.Protocols = HttpProtocols.Http1AndHttp2));
 
 builder.Configuration.AddJsonFile("appsettings.Development.json", optional: true);
 
