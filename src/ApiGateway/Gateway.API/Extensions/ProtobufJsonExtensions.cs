@@ -1,5 +1,5 @@
+using System.Collections.Generic;
 using Google.Protobuf;
-using Google.Protobuf.Collections;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Gateway.API.Extensions;
@@ -21,10 +21,15 @@ public static class ProtobufJsonExtensions
     public static ContentResult ProtoJsonCreated(this ControllerBase _, IMessage message)
         => ProtoJson(_, message, 201);
 
-    public static string FormatMessage(IMessage message) => Formatter.Format(message);
-
-    public static string FormatList<T>(RepeatedField<T> items) where T : IMessage
+    public static ContentResult ProtoJsonComposite(this ControllerBase _, params (string key, object value)[] parts)
     {
-        return "[" + string.Join(",", items.Select(m => FormatMessage(m))) + "]";
+        var json = "{" + string.Join(",", parts.Select(p => p.value switch
+        {
+            IMessage msg => $"\"{p.key}\":{Formatter.Format(msg)}",
+            IEnumerable<IMessage> list => $"\"{p.key}\":[{string.Join(",", list.Select(m => Formatter.Format(m)))}]",
+            _ => $"\"{p.key}\":null"
+        })) + "}";
+
+        return new ContentResult { Content = json, ContentType = "application/json", StatusCode = 200 };
     }
 }

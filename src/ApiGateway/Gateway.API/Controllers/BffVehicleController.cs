@@ -51,21 +51,13 @@ public class BffVehicleController(
         var telemetry = await telemetryTask;
         var alerts = await alertTask;
 
-        var json = "{"
-            + $"\"vehicle\":{ProtobufJsonExtensions.FormatMessage(vehicle)},"
-            + $"\"location\":{ProtobufJsonExtensions.FormatList(locations.Locations)},"
-            + $"\"battery\":{ProtobufJsonExtensions.FormatList(battery.Statuses)},"
-            + $"\"trips\":{ProtobufJsonExtensions.FormatList(trips.Trips)},"
-            + $"\"telemetry\":{ProtobufJsonExtensions.FormatList(telemetry.Records)},"
-            + $"\"alerts\":{ProtobufJsonExtensions.FormatList(alerts.Alerts)}"
-            + "}";
-
-        return new ContentResult
-        {
-            Content = json,
-            ContentType = "application/json",
-            StatusCode = 200
-        };
+        return this.ProtoJsonComposite(
+            ("vehicle", vehicle),
+            ("location", locations.Locations),
+            ("battery", battery.Statuses),
+            ("trips", trips.Trips),
+            ("telemetry", telemetry.Records),
+            ("alerts", alerts.Alerts));
     }
 
     /// <summary>
