@@ -7,6 +7,7 @@ using Shared.Grpc.Location;
 using Shared.Grpc.Telemetry;
 using Shared.Grpc.Trip;
 using Shared.Grpc.Vehicle;
+using Gateway.API.GraphQL;
 using Shared.Kernel.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -80,6 +81,11 @@ builder.Services.AddOpenApiDocument(config =>
 builder.Services.AddReverseProxy()
     .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
 
+// GraphQL (HotChocolate)
+builder.Services
+    .AddGraphQLServer()
+    .AddQueryType<Query>();
+
 builder.Services.AddCors();
 builder.Services.AddHealthChecks();
 
@@ -102,6 +108,7 @@ if (app.Environment.IsDevelopment())
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+app.MapGraphQL();
 app.MapReverseProxy();
 app.MapHealthChecks("/health");
 
