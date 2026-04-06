@@ -84,7 +84,8 @@ builder.Services.AddReverseProxy()
 // GraphQL (HotChocolate)
 builder.Services
     .AddGraphQLServer()
-    .AddQueryType<Query>();
+    .AddQueryType<Query>()
+    .AddMutationType<Mutation>();
 
 builder.Services.AddCors();
 builder.Services.AddHealthChecks();
