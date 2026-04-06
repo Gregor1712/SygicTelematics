@@ -4,8 +4,6 @@ option csharp_namespace = "Shared.Grpc.Telemetry";
 
 package telemetry;
 
-import "google/protobuf/timestamp.proto";
-
 service TelemetryGrpc {
   rpc GetByVehicle (VehicleIdRequest) returns (TelemetryListReply);
   rpc Create (CreateTelemetryRequest) returns (TelemetryReply);
@@ -26,7 +24,7 @@ message TelemetryReply {
   string vehicle_id = 2;
   string type = 3;
   double value = 4;
-  google.protobuf.Timestamp timestamp = 5;
+  string timestamp = 5;
 }
 
 message TelemetryListReply {

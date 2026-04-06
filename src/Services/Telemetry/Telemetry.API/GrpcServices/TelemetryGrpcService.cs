@@ -1,4 +1,3 @@
-using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
@@ -54,6 +53,6 @@ public class TelemetryGrpcService(TelemetryDbContext context, IPublishEndpoint p
         VehicleId = e.VehicleId.ToString(),
         Type = e.Type,
         Value = e.Value,
-        Timestamp = Timestamp.FromDateTime(DateTime.SpecifyKind(e.Timestamp, DateTimeKind.Utc))
+        Timestamp = e.Timestamp.ToString("o")
     };
 }

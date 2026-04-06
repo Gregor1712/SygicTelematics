@@ -4,8 +4,6 @@ option csharp_namespace = "Shared.Grpc.Location";
 
 package location;
 
-import "google/protobuf/timestamp.proto";
-
 service LocationGrpc {
   rpc GetByVehicle (VehicleIdRequest) returns (LocationListReply);
   rpc Create (CreateLocationRequest) returns (LocationReply);
@@ -28,7 +26,7 @@ message LocationReply {
   double latitude = 3;
   double longitude = 4;
   optional double speed = 5;
-  google.protobuf.Timestamp timestamp = 6;
+  string timestamp = 6;
 }
 
 message LocationListReply {

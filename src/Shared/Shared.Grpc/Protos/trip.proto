@@ -4,8 +4,6 @@ option csharp_namespace = "Shared.Grpc.Trip";
 
 package trip;
 
-import "google/protobuf/timestamp.proto";
-
 service TripGrpc {
   rpc GetByVehicle (VehicleIdRequest) returns (TripListReply);
   rpc Create (CreateTripRequest) returns (TripReply);
@@ -17,8 +15,8 @@ message VehicleIdRequest {
 
 message CreateTripRequest {
   string vehicle_id = 1;
-  google.protobuf.Timestamp start_time = 2;
-  google.protobuf.Timestamp end_time = 3;
+  string start_time = 2;
+  string end_time = 3;
   double distance_km = 4;
   double average_speed = 5;
   optional double fuel_consumed = 6;
@@ -30,8 +28,8 @@ message CreateTripRequest {
 message TripReply {
   string id = 1;
   string vehicle_id = 2;
-  google.protobuf.Timestamp start_time = 3;
-  google.protobuf.Timestamp end_time = 4;
+  string start_time = 3;
+  string end_time = 4;
   double distance_km = 5;
   double average_speed = 6;
   optional double fuel_consumed = 7;

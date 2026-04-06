@@ -4,8 +4,6 @@ option csharp_namespace = "Shared.Grpc.Alert";
 
 package alert;
 
-import "google/protobuf/timestamp.proto";
-
 service AlertGrpc {
   rpc GetByVehicle (VehicleIdRequest) returns (AlertListReply);
 }
@@ -20,7 +18,7 @@ message AlertReply {
   string type = 3;
   string message = 4;
   bool is_resolved = 5;
-  google.protobuf.Timestamp created_at = 6;
+  string created_at = 6;
 }
 
 message AlertListReply {

@@ -1,4 +1,3 @@
-using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
@@ -31,8 +30,8 @@ public class TripGrpcService(TripDbContext context, IPublishEndpoint publishEndp
         {
             Id = Guid.NewGuid(),
             VehicleId = Guid.Parse(request.VehicleId),
-            StartTime = request.StartTime.ToDateTime(),
-            EndTime = request.EndTime != null ? request.EndTime.ToDateTime() : null,
+            StartTime = DateTime.Parse(request.StartTime).ToUniversalTime(),
+            EndTime = !string.IsNullOrEmpty(request.EndTime) ? DateTime.Parse(request.EndTime).ToUniversalTime() : null,
             DistanceKm = request.DistanceKm,
             AverageSpeed = request.AverageSpeed,
             FuelConsumed = request.HasFuelConsumed ? request.FuelConsumed : null,
@@ -63,13 +62,13 @@ public class TripGrpcService(TripDbContext context, IPublishEndpoint publishEndp
         {
             Id = e.Id.ToString(),
             VehicleId = e.VehicleId.ToString(),
-            StartTime = Timestamp.FromDateTime(DateTime.SpecifyKind(e.StartTime, DateTimeKind.Utc)),
+            StartTime = e.StartTime.ToString("o"),
             DistanceKm = e.DistanceKm,
             AverageSpeed = e.AverageSpeed
         };
 
         if (e.EndTime.HasValue)
-            reply.EndTime = Timestamp.FromDateTime(DateTime.SpecifyKind(e.EndTime.Value, DateTimeKind.Utc));
+            reply.EndTime = e.EndTime.Value.ToString("o");
         if (e.FuelConsumed.HasValue) reply.FuelConsumed = e.FuelConsumed.Value;
         if (e.EnergyConsumed.HasValue) reply.EnergyConsumed = e.EnergyConsumed.Value;
         if (e.StartLocationId.HasValue) reply.StartLocationId = e.StartLocationId.Value.ToString();

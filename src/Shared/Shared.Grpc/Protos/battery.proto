@@ -4,8 +4,6 @@ option csharp_namespace = "Shared.Grpc.Battery";
 
 package battery;
 
-import "google/protobuf/timestamp.proto";
-
 service BatteryGrpc {
   rpc GetByVehicle (VehicleIdRequest) returns (BatteryListReply);
   rpc Create (CreateBatteryRequest) returns (BatteryReply);
@@ -30,7 +28,7 @@ message BatteryReply {
   double voltage = 4;
   optional double temperature = 5;
   bool is_charging = 6;
-  google.protobuf.Timestamp timestamp = 7;
+  string timestamp = 7;
 }
 
 message BatteryListReply {

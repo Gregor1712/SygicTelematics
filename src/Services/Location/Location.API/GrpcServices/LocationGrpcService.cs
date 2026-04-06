@@ -1,4 +1,3 @@
-using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
 using Location.Application.Entities;
 using Location.Infrastructure.Data;
@@ -58,7 +57,7 @@ public class LocationGrpcService(LocationDbContext context, IPublishEndpoint pub
             VehicleId = e.VehicleId.ToString(),
             Latitude = e.Latitude,
             Longitude = e.Longitude,
-            Timestamp = Timestamp.FromDateTime(DateTime.SpecifyKind(e.Timestamp, DateTimeKind.Utc))
+            Timestamp = e.Timestamp.ToString("o")
         };
         if (e.Speed.HasValue) reply.Speed = e.Speed.Value;
         return reply;

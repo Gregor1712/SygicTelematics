@@ -1,5 +1,4 @@
 using Alert.Infrastructure.Data;
-using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
 using Microsoft.EntityFrameworkCore;
 using Shared.Grpc.Alert;
@@ -29,6 +28,6 @@ public class AlertGrpcService(AlertDbContext context) : AlertGrpc.AlertGrpcBase
         Type = e.Type,
         Message = e.Message,
         IsResolved = e.IsResolved,
-        CreatedAt = Timestamp.FromDateTime(DateTime.SpecifyKind(e.CreatedAt, DateTimeKind.Utc))
+        CreatedAt = e.CreatedAt.ToString("o")
     };
 }

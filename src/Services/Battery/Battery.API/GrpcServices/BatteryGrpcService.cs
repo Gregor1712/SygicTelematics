@@ -1,6 +1,5 @@
 using Battery.Application.Entities;
 using Battery.Infrastructure.Data;
-using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
@@ -60,7 +59,7 @@ public class BatteryGrpcService(BatteryDbContext context, IPublishEndpoint publi
             Percentage = e.Percentage,
             Voltage = e.Voltage,
             IsCharging = e.IsCharging,
-            Timestamp = Timestamp.FromDateTime(DateTime.SpecifyKind(e.Timestamp, DateTimeKind.Utc))
+            Timestamp = e.Timestamp.ToString("o")
         };
         if (e.Temperature.HasValue) reply.Temperature = e.Temperature.Value;
         return reply;
