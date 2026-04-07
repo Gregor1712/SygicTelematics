@@ -7,7 +7,7 @@ using Shared.Kernel.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Configuration.AddJsonFile("appsettings.Development.json", optional: true);
+builder.Configuration.AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true);
 
 builder.Services.AddDbContext<CatalogDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -48,7 +48,7 @@ app.UseCors(x => x
     .AllowCredentials()
     .WithOrigins("http://localhost:4200", "https://localhost:4200"));
 
-if (app.Environment.IsDevelopment())
+if (!app.Environment.IsProduction())
 {
     app.UseOpenApi();
     app.UseSwaggerUi();

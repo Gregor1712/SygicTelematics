@@ -12,11 +12,11 @@ builder.WebHost.ConfigureKestrel(o =>
 {
     var httpPort = builder.Configuration.GetValue("HttpPort", 5105);
     var grpcPort = builder.Configuration.GetValue("GrpcPort", 6105);
-    o.ListenLocalhost(httpPort, lo => lo.Protocols = HttpProtocols.Http1);
-    o.ListenLocalhost(grpcPort, lo => lo.Protocols = HttpProtocols.Http2);
+    o.ListenAnyIP(httpPort, lo => lo.Protocols = HttpProtocols.Http1);
+    o.ListenAnyIP(grpcPort, lo => lo.Protocols = HttpProtocols.Http2);
 });
 
-builder.Configuration.AddJsonFile("appsettings.Development.json", optional: true);
+builder.Configuration.AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true);
 
 builder.Services.AddDbContext<BatteryDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -59,7 +59,7 @@ app.UseCors(x => x
     .AllowCredentials()
     .WithOrigins("http://localhost:4200", "https://localhost:4200"));
 
-if (app.Environment.IsDevelopment())
+if (!app.Environment.IsProduction())
 {
     app.UseOpenApi();
     app.UseSwaggerUi();

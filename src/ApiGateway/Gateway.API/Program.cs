@@ -86,8 +86,8 @@ builder.Services
     .AddGraphQLServer()
     .AddQueryType<Query>()
     .AddMutationType<Mutation>()
-    .AllowIntrospection(builder.Environment.IsDevelopment())
-    .ModifyRequestOptions(o => o.IncludeExceptionDetails = builder.Environment.IsDevelopment());
+    .AllowIntrospection(!builder.Environment.IsProduction())
+    .ModifyRequestOptions(o => o.IncludeExceptionDetails = !builder.Environment.IsProduction());
 
 builder.Services.AddCors();
 builder.Services.AddHealthChecks();
@@ -102,7 +102,7 @@ app.UseCors(x => x
     .AllowCredentials()
     .WithOrigins("http://localhost:4200", "https://localhost:4200"));
 
-if (app.Environment.IsDevelopment())
+if (!app.Environment.IsProduction())
 {
     app.UseOpenApi();
     app.UseSwaggerUi();

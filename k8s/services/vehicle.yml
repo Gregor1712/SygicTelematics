@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vehicle-api
+  namespace: sygic-telematics
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vehicle-api
+  template:
+    metadata:
+      labels:
+        app: vehicle-api
+    spec:
+      containers:
+        - name: vehicle-api
+          image: sygic-registry:5000/vehicle-api:latest
+          ports:
+            - containerPort: 5103
+              name: http
+            - containerPort: 6103
+              name: grpc
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: "Docker"
+            - name: HttpPort
+              value: "5103"
+            - name: GrpcPort
+              value: "6103"
+            - name: ConnectionStrings__DefaultConnection
+              valueFrom:
+                secretKeyRef:
+                  name: sygic-db-secret
+                  key: ConnectionString__Vehicle
+          envFrom:
+            - configMapRef:
+                name: sygic-config
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "250m"
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 5103
+            initialDelaySeconds: 15
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 5103
+            initialDelaySeconds: 30
+            periodSeconds: 15
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: vehicle-api
+  namespace: sygic-telematics
+spec:
+  selector:
+    app: vehicle-api
+  ports:
+    - port: 5103
+      targetPort: 5103
+      name: http
+    - port: 6103
+      targetPort: 6103
+      name: grpc
+  type: ClusterIP

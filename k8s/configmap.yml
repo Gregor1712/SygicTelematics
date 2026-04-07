@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sygic-config
+  namespace: sygic-telematics
+data:
+  ASPNETCORE_ENVIRONMENT: "Docker"
+  RabbitMQ__Host: "rabbitmq"
+  RabbitMQ__Username: "guest"
+  RabbitMQ__Password: "guest"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: sygic-db-secret
+  namespace: sygic-telematics
+type: Opaque
+stringData:
+  ConnectionString__Identity: "Server=sqlserver;Database=TestDB;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=true"
+  ConnectionString__Catalog: "Server=sqlserver;Database=CatalogDB;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=true"
+  ConnectionString__Vehicle: "Server=sqlserver;Database=VehicleDb;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=true"
+  ConnectionString__Location: "Server=sqlserver;Database=LocationDb;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=true"
+  ConnectionString__Battery: "Server=sqlserver;Database=BatteryDb;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=true"
+  ConnectionString__Trip: "Server=sqlserver;Database=TripDb;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=true"
+  ConnectionString__Telemetry: "Server=sqlserver;Database=TelemetryDb;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=true"
+  ConnectionString__Alert: "Server=sqlserver;Database=AlertDb;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=true"
+  TokenKey: "this-is-a-super-secret-key-that-must-be-at-least-64-characters-long-for-hmac-sha512"

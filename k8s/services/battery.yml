@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: battery-api
+  namespace: sygic-telematics
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: battery-api
+  template:
+    metadata:
+      labels:
+        app: battery-api
+    spec:
+      containers:
+        - name: battery-api
+          image: sygic-registry:5000/battery-api:latest
+          ports:
+            - containerPort: 5105
+              name: http
+            - containerPort: 6105
+              name: grpc
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: "Docker"
+            - name: HttpPort
+              value: "5105"
+            - name: GrpcPort
+              value: "6105"
+            - name: ConnectionStrings__DefaultConnection
+              valueFrom:
+                secretKeyRef:
+                  name: sygic-db-secret
+                  key: ConnectionString__Battery
+          envFrom:
+            - configMapRef:
+                name: sygic-config
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "250m"
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 5105
+            initialDelaySeconds: 15
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 5105
+            initialDelaySeconds: 30
+            periodSeconds: 15
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: battery-api
+  namespace: sygic-telematics
+spec:
+  selector:
+    app: battery-api
+  ports:
+    - port: 5105
+      targetPort: 5105
+      name: http
+    - port: 6105
+      targetPort: 6105
+      name: grpc
+  type: ClusterIP

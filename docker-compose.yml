@@ -1,0 +1,256 @@
+services:
+
+  # ─── Infrastructure ────────────────────────────────────────────────
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=YourStrong!Passw0rd
+    ports:
+      - "1434:1433"
+    volumes:
+      - sqlserver-data:/var/opt/mssql
+    healthcheck:
+      test: /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "YourStrong!Passw0rd" -C -Q "SELECT 1" || exit 1
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    networks:
+      - sygic-net
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+    networks:
+      - sygic-net
+
+  # ─── API Gateway ───────────────────────────────────────────────────
+
+  gateway-api:
+    build:
+      context: .
+      dockerfile: src/ApiGateway/Gateway.API/Dockerfile
+    container_name: gateway-api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+    ports:
+      - "5100:8080"
+    depends_on:
+      identity-api:
+        condition: service_started
+      vehicle-api:
+        condition: service_started
+      location-api:
+        condition: service_started
+      battery-api:
+        condition: service_started
+      trip-api:
+        condition: service_started
+      telemetry-api:
+        condition: service_started
+      alert-api:
+        condition: service_started
+    restart: on-failure
+    networks:
+      - sygic-net
+
+  # ─── Identity Service ─────────────────────────────────────────────
+
+  identity-api:
+    build:
+      context: .
+      dockerfile: src/Services/Identity/Identity.API/Dockerfile
+    container_name: identity-api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+      - ASPNETCORE_URLS=http://+:8080
+    ports:
+      - "5101:8080"
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    restart: on-failure
+    networks:
+      - sygic-net
+
+  # ─── Catalog Service ──────────────────────────────────────────────
+
+  catalog-api:
+    build:
+      context: .
+      dockerfile: src/Services/Catalog/Catalog.API/Dockerfile
+    container_name: catalog-api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+      - ASPNETCORE_URLS=http://+:8080
+    ports:
+      - "5102:8080"
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    restart: on-failure
+    networks:
+      - sygic-net
+
+  # ─── Vehicle Service ──────────────────────────────────────────────
+
+  vehicle-api:
+    build:
+      context: .
+      dockerfile: src/Services/Vehicle/Vehicle.API/Dockerfile
+    container_name: vehicle-api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+      - HttpPort=5103
+      - GrpcPort=6103
+    ports:
+      - "5103:5103"
+      - "6103:6103"
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    restart: on-failure
+    networks:
+      - sygic-net
+
+  # ─── Location Service ─────────────────────────────────────────────
+
+  location-api:
+    build:
+      context: .
+      dockerfile: src/Services/Location/Location.API/Dockerfile
+    container_name: location-api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+      - HttpPort=5104
+      - GrpcPort=6104
+    ports:
+      - "5104:5104"
+      - "6104:6104"
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    restart: on-failure
+    networks:
+      - sygic-net
+
+  # ─── Battery Service ──────────────────────────────────────────────
+
+  battery-api:
+    build:
+      context: .
+      dockerfile: src/Services/Battery/Battery.API/Dockerfile
+    container_name: battery-api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+      - HttpPort=5105
+      - GrpcPort=6105
+    ports:
+      - "5105:5105"
+      - "6105:6105"
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    restart: on-failure
+    networks:
+      - sygic-net
+
+  # ─── Trip Service ─────────────────────────────────────────────────
+
+  trip-api:
+    build:
+      context: .
+      dockerfile: src/Services/Trip/Trip.API/Dockerfile
+    container_name: trip-api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+      - HttpPort=5106
+      - GrpcPort=6106
+    ports:
+      - "5106:5106"
+      - "6106:6106"
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    restart: on-failure
+    networks:
+      - sygic-net
+
+  # ─── Telemetry Service ────────────────────────────────────────────
+
+  telemetry-api:
+    build:
+      context: .
+      dockerfile: src/Services/Telemetry/Telemetry.API/Dockerfile
+    container_name: telemetry-api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+      - HttpPort=5107
+      - GrpcPort=6107
+    ports:
+      - "5107:5107"
+      - "6107:6107"
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    restart: on-failure
+    networks:
+      - sygic-net
+
+  # ─── Alert Service ────────────────────────────────────────────────
+
+  alert-api:
+    build:
+      context: .
+      dockerfile: src/Services/Alert/Alert.API/Dockerfile
+    container_name: alert-api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+      - HttpPort=5108
+      - GrpcPort=6108
+    ports:
+      - "5108:5108"
+      - "6108:6108"
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    restart: on-failure
+    networks:
+      - sygic-net
+
+volumes:
+  sqlserver-data:
+  rabbitmq-data:
+
+networks:
+  sygic-net:
+    driver: bridge

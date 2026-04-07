@@ -76,7 +76,7 @@ var app = builder.Build();
 // Middleware
 app.UseMiddleware<ExceptionMiddleware>();
 
-if (app.Environment.IsDevelopment())
+if (!app.Environment.IsProduction())
 {
     app.UseOpenApi();
     app.UseSwaggerUi();
@@ -96,6 +96,9 @@ var services = scope.ServiceProvider;
 
 try
 {
+    var context = services.GetRequiredService<IdentityAppDbContext>();
+    await context.Database.EnsureCreatedAsync();
+
     var userManager = services.GetRequiredService<UserManager<AppUser>>();
     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
     await SeedUsers.SeedUsersData(userManager, roleManager);

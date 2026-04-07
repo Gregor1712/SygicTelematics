@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: telemetry-api
+  namespace: sygic-telematics
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: telemetry-api
+  template:
+    metadata:
+      labels:
+        app: telemetry-api
+    spec:
+      containers:
+        - name: telemetry-api
+          image: sygic-registry:5000/telemetry-api:latest
+          ports:
+            - containerPort: 5107
+              name: http
+            - containerPort: 6107
+              name: grpc
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: "Docker"
+            - name: HttpPort
+              value: "5107"
+            - name: GrpcPort
+              value: "6107"
+            - name: ConnectionStrings__DefaultConnection
+              valueFrom:
+                secretKeyRef:
+                  name: sygic-db-secret
+                  key: ConnectionString__Telemetry
+          envFrom:
+            - configMapRef:
+                name: sygic-config
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "250m"
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 5107
+            initialDelaySeconds: 15
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 5107
+            initialDelaySeconds: 30
+            periodSeconds: 15
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: telemetry-api
+  namespace: sygic-telematics
+spec:
+  selector:
+    app: telemetry-api
+  ports:
+    - port: 5107
+      targetPort: 5107
+      name: http
+    - port: 6107
+      targetPort: 6107
+      name: grpc
+  type: ClusterIP

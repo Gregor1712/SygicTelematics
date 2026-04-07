@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: alert-api
+  namespace: sygic-telematics
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: alert-api
+  template:
+    metadata:
+      labels:
+        app: alert-api
+    spec:
+      containers:
+        - name: alert-api
+          image: sygic-registry:5000/alert-api:latest
+          ports:
+            - containerPort: 5108
+              name: http
+            - containerPort: 6108
+              name: grpc
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: "Docker"
+            - name: HttpPort
+              value: "5108"
+            - name: GrpcPort
+              value: "6108"
+            - name: ConnectionStrings__DefaultConnection
+              valueFrom:
+                secretKeyRef:
+                  name: sygic-db-secret
+                  key: ConnectionString__Alert
+          envFrom:
+            - configMapRef:
+                name: sygic-config
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "250m"
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 5108
+            initialDelaySeconds: 15
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 5108
+            initialDelaySeconds: 30
+            periodSeconds: 15
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: alert-api
+  namespace: sygic-telematics
+spec:
+  selector:
+    app: alert-api
+  ports:
+    - port: 5108
+      targetPort: 5108
+      name: http
+    - port: 6108
+      targetPort: 6108
+      name: grpc
+  type: ClusterIP

@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: location-api
+  namespace: sygic-telematics
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: location-api
+  template:
+    metadata:
+      labels:
+        app: location-api
+    spec:
+      containers:
+        - name: location-api
+          image: sygic-registry:5000/location-api:latest
+          ports:
+            - containerPort: 5104
+              name: http
+            - containerPort: 6104
+              name: grpc
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: "Docker"
+            - name: HttpPort
+              value: "5104"
+            - name: GrpcPort
+              value: "6104"
+            - name: ConnectionStrings__DefaultConnection
+              valueFrom:
+                secretKeyRef:
+                  name: sygic-db-secret
+                  key: ConnectionString__Location
+          envFrom:
+            - configMapRef:
+                name: sygic-config
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "250m"
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 5104
+            initialDelaySeconds: 15
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 5104
+            initialDelaySeconds: 30
+            periodSeconds: 15
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: location-api
+  namespace: sygic-telematics
+spec:
+  selector:
+    app: location-api
+  ports:
+    - port: 5104
+      targetPort: 5104
+      name: http
+    - port: 6104
+      targetPort: 6104
+      name: grpc
+  type: ClusterIP
