@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sygic Telematics — Architecture Diagram</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #1a1b2e; color: #e0e0e0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 30px; min-height: 100vh; }
+
+  h1 { text-align: center; font-size: 28px; color: #fff; letter-spacing: 2px; margin-bottom: 4px; }
+  .subtitle { text-align: center; font-size: 13px; color: #8892b0; margin-bottom: 30px; letter-spacing: 1px; }
+
+  /* Legend */
+  .legend { position: absolute; top: 30px; right: 40px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 14px 18px; font-size: 12px; }
+  .legend-title { font-weight: 700; margin-bottom: 8px; color: #fff; font-size: 13px; }
+  .legend-item { display: flex; align-items: center; margin-bottom: 5px; }
+  .legend-dot { width: 12px; height: 12px; border-radius: 50%; margin-right: 8px; flex-shrink: 0; }
+
+  /* Sections */
+  .section { border: 2px dashed; border-radius: 12px; padding: 20px; margin-bottom: 20px; position: relative; }
+  .section-label { position: absolute; top: -12px; left: 20px; background: #1a1b2e; padding: 0 10px; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; }
+
+  /* K8s outer */
+  .k8s-cluster { border-color: #64ffda; }
+  .k8s-cluster > .section-label { color: #64ffda; }
+
+  /* Namespace */
+  .namespace { border-color: #82aaff; margin-top: 10px; }
+  .namespace > .section-label { color: #82aaff; }
+
+  /* VM Boxes */
+  .vm-row { display: flex; gap: 16px; margin-bottom: 20px; }
+  .vm-box { flex: 1; border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 14px; background: rgba(255,255,255,0.03); text-align: center; }
+  .vm-box .vm-title { font-size: 13px; font-weight: 700; color: #c792ea; margin-bottom: 4px; }
+  .vm-box .vm-detail { font-size: 11px; color: #8892b0; }
+
+  /* Client */
+  .client-box { background: linear-gradient(135deg, #1e3a5f, #1a2744); border: 2px solid #82aaff; border-radius: 10px; padding: 16px 30px; text-align: center; display: inline-block; margin: 0 auto 10px auto; }
+  .client-box .title { font-size: 16px; font-weight: 700; color: #82aaff; }
+  .client-box .detail { font-size: 11px; color: #8892b0; margin-top: 2px; }
+  .center { text-align: center; }
+
+  /* Arrows */
+  .arrow-down { text-align: center; font-size: 20px; color: #64ffda; margin: 6px 0; }
+  .arrow-label { font-size: 10px; color: #ffcb6b; display: block; margin-top: -2px; margin-bottom: 2px; }
+
+  /* Ingress */
+  .ingress-box { background: linear-gradient(135deg, #1b3b2a, #1a2e22); border: 2px solid #64ffda; border-radius: 10px; padding: 14px; text-align: center; margin-bottom: 14px; }
+  .ingress-box .title { font-size: 15px; font-weight: 700; color: #64ffda; }
+  .ingress-box .detail { font-size: 11px; color: #8892b0; margin-top: 2px; }
+
+  /* Gateway */
+  .gateway-section { border: 2px solid #00bcd4; border-radius: 10px; padding: 18px; margin-bottom: 14px; background: rgba(0,188,212,0.04); }
+  .gateway-title { text-align: center; font-size: 16px; font-weight: 700; color: #00bcd4; margin-bottom: 12px; }
+  .gateway-modules { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .gw-mod { border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 10px 16px; text-align: center; min-width: 140px; background: rgba(255,255,255,0.03); }
+  .gw-mod .mod-name { font-size: 13px; font-weight: 600; color: #e0e0e0; }
+  .gw-mod .mod-detail { font-size: 10px; color: #8892b0; margin-top: 2px; }
+  .gw-mod.graphql { border-color: #ff79c6; }
+  .gw-mod.graphql .mod-name { color: #ff79c6; }
+  .gw-mod.rest { border-color: #50fa7b; }
+  .gw-mod.rest .mod-name { color: #50fa7b; }
+  .gw-mod.proxy { border-color: #64ffda; }
+  .gw-mod.proxy .mod-name { color: #64ffda; }
+  .gw-mod.auth { border-color: #ffcb6b; }
+  .gw-mod.auth .mod-name { color: #ffcb6b; }
+
+  /* Protocol labels */
+  .proto-row { display: flex; justify-content: center; gap: 30px; margin: 10px 0; }
+  .proto-tag { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 4px; }
+  .proto-http { background: #50fa7b22; color: #50fa7b; border: 1px solid #50fa7b; }
+  .proto-grpc { background: #ffcb6b22; color: #ffcb6b; border: 1px solid #ffcb6b; }
+  .proto-rabbit { background: #ff79c622; color: #ff79c6; border: 1px solid #ff79c6; }
+
+  /* Services grid */
+  .services-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; margin-bottom: 14px; }
+  .svc-box { border-radius: 8px; padding: 12px 8px; text-align: center; position: relative; }
+  .svc-box.identity { background: linear-gradient(135deg, #2d1b4e, #1f1338); border: 2px solid #c792ea; }
+  .svc-box.identity .svc-name { color: #c792ea; }
+  .svc-box.micro { background: linear-gradient(135deg, #1b2d4e, #141e38); border: 2px solid #82aaff; }
+  .svc-box.micro .svc-name { color: #82aaff; }
+  .svc-name { font-size: 13px; font-weight: 700; }
+  .svc-ports { font-size: 10px; color: #8892b0; margin-top: 3px; }
+  .svc-badge { font-size: 9px; padding: 1px 6px; border-radius: 3px; display: inline-block; margin-top: 4px; }
+  .badge-grpc { background: #ffcb6b22; color: #ffcb6b; border: 1px solid #ffcb6b55; }
+  .badge-http { background: #50fa7b22; color: #50fa7b; border: 1px solid #50fa7b55; }
+
+  /* Databases */
+  .db-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; margin-bottom: 14px; }
+  .db-box { text-align: center; padding: 8px; }
+  .db-icon { width: 40px; height: 26px; border: 2px solid #00e5ff; border-radius: 50%/40%; margin: 0 auto 4px auto; background: rgba(0,229,255,0.08); }
+  .db-name { font-size: 10px; color: #00e5ff; }
+
+  /* Infrastructure */
+  .infra-row { display: flex; gap: 16px; margin-bottom: 14px; }
+  .infra-box { flex: 1; border-radius: 8px; padding: 14px; text-align: center; }
+  .infra-box.sql { background: rgba(255,82,82,0.08); border: 2px solid #ff5252; }
+  .infra-box.sql .infra-name { color: #ff5252; }
+  .infra-box.rabbit { background: rgba(255,121,198,0.08); border: 2px solid #ff79c6; }
+  .infra-box.rabbit .infra-name { color: #ff79c6; }
+  .infra-name { font-size: 14px; font-weight: 700; }
+  .infra-detail { font-size: 11px; color: #8892b0; margin-top: 3px; }
+
+  /* Docker layer */
+  .docker-section { border-color: #0db7ed; }
+  .docker-section > .section-label { color: #0db7ed; }
+
+  /* PV */
+  .pv-row { display: flex; gap: 16px; }
+  .pv-box { flex: 1; border: 1px dashed #ffcb6b; border-radius: 6px; padding: 8px; text-align: center; }
+  .pv-name { font-size: 11px; color: #ffcb6b; font-weight: 600; }
+  .pv-detail { font-size: 10px; color: #8892b0; }
+
+  /* Registry */
+  .registry-box { border: 2px solid #0db7ed; border-radius: 8px; padding: 10px 20px; text-align: center; display: inline-block; background: rgba(13,183,237,0.06); }
+  .registry-box .title { font-size: 13px; font-weight: 700; color: #0db7ed; }
+  .registry-box .detail { font-size: 10px; color: #8892b0; }
+
+  /* Flannel */
+  .network-bar { background: rgba(100,255,218,0.06); border: 1px solid #64ffda44; border-radius: 6px; padding: 8px; text-align: center; margin: 10px 0; }
+  .network-bar span { font-size: 11px; color: #64ffda; font-weight: 600; }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .services-grid, .db-grid { grid-template-columns: repeat(4, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<h1>SYGIC TELEMATICS — FULL ARCHITECTURE</h1>
+<div class="subtitle">.NET 8 &nbsp;|&nbsp; Docker &nbsp;|&nbsp; Kubernetes &nbsp;|&nbsp; gRPC &nbsp;|&nbsp; GraphQL &nbsp;|&nbsp; YARP &nbsp;|&nbsp; RabbitMQ &nbsp;|&nbsp; MassTransit</div>
+
+<!-- Legend -->
+<div class="legend">
+  <div class="legend-title">LEGEND</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#ff79c6"></div> GraphQL (HotChocolate)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#50fa7b"></div> REST / HTTP</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#ffcb6b"></div> gRPC (HTTP/2 + Protobuf)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#64ffda"></div> YARP Reverse Proxy</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#ff5252"></div> RabbitMQ Events</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#82aaff"></div> Microservice</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#00e5ff"></div> SQL Server Database</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#0db7ed"></div> Docker Container</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#c792ea"></div> Kubernetes / VMware</div>
+</div>
+
+<!-- VMware Layer -->
+<div class="section" style="border-color: #c792ea; margin-bottom: 24px;">
+  <div class="section-label" style="color: #c792ea;">VMware Workstation 17 Pro — On-Premises Infrastructure</div>
+  <div class="vm-row" style="margin-top: 8px;">
+    <div class="vm-box">
+      <div class="vm-title">k8s-master</div>
+      <div class="vm-detail">Ubuntu Server 24.04 LTS</div>
+      <div class="vm-detail">192.168.1.100</div>
+      <div class="vm-detail" style="color:#64ffda; margin-top:4px;">Control Plane + Registry + Docker</div>
+    </div>
+    <div class="vm-box">
+      <div class="vm-title">k8s-worker1</div>
+      <div class="vm-detail">Ubuntu Server 24.04 LTS</div>
+      <div class="vm-detail">192.168.1.101</div>
+      <div class="vm-detail" style="color:#82aaff; margin-top:4px;">Worker Node</div>
+    </div>
+    <div class="vm-box">
+      <div class="vm-title">k8s-worker2</div>
+      <div class="vm-detail">Ubuntu Server 24.04 LTS</div>
+      <div class="vm-detail">192.168.1.102</div>
+      <div class="vm-detail" style="color:#82aaff; margin-top:4px;">Worker Node</div>
+    </div>
+  </div>
+
+  <!-- K8s Cluster -->
+  <div class="section k8s-cluster">
+    <div class="section-label">Kubernetes Cluster (kubeadm + Flannel CNI)</div>
+
+    <div class="network-bar" style="margin-top: 4px;"><span>Flannel Pod Network — 10.244.0.0/16</span></div>
+
+    <!-- Namespace -->
+    <div class="section namespace">
+      <div class="section-label">Namespace: sygic-telematics</div>
+
+      <!-- Client -->
+      <div class="center" style="margin-top: 8px;">
+        <div class="client-box">
+          <div class="title">External Client</div>
+          <div class="detail">Postman / Browser / Angular App</div>
+        </div>
+      </div>
+
+      <div class="arrow-down">&#x25BC;<span class="arrow-label">sygic.local</span></div>
+
+      <!-- Ingress -->
+      <div class="ingress-box">
+        <div class="title">NGINX Ingress Controller</div>
+        <div class="detail">sygic.local &rarr; gateway-api:8080 &nbsp;|&nbsp; NodePort 30080/30443</div>
+      </div>
+
+      <div class="arrow-down">&#x25BC;</div>
+
+      <!-- Gateway -->
+      <div class="gateway-section">
+        <div class="gateway-title">API GATEWAY &nbsp;<span style="font-size:11px; font-weight:400; color:#8892b0;">(gateway-api:8080)</span></div>
+        <div class="gateway-modules">
+          <div class="gw-mod graphql">
+            <div class="mod-name">GraphQL</div>
+            <div class="mod-detail">/graphql (HotChocolate)</div>
+          </div>
+          <div class="gw-mod rest">
+            <div class="mod-name">BFF Controllers</div>
+            <div class="mod-detail">REST /api/bff/*</div>
+          </div>
+          <div class="gw-mod proxy">
+            <div class="mod-name">YARP Proxy</div>
+            <div class="mod-detail">Reverse Proxy</div>
+          </div>
+          <div class="gw-mod auth">
+            <div class="mod-name">Auth (JWT)</div>
+            <div class="mod-detail">Bearer Token</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Protocol labels -->
+      <div class="proto-row">
+        <span class="proto-tag proto-http">HTTP / REST</span>
+        <span class="proto-tag proto-grpc">gRPC (HTTP/2)</span>
+        <span class="proto-tag proto-rabbit">RabbitMQ Events</span>
+      </div>
+
+      <!-- Services -->
+      <div class="services-grid">
+        <div class="svc-box identity">
+          <div class="svc-name">Identity</div>
+          <div class="svc-ports">:8080</div>
+          <div class="svc-badge badge-http">HTTP</div>
+        </div>
+        <div class="svc-box micro">
+          <div class="svc-name">Vehicle</div>
+          <div class="svc-ports">:5103 / :6103</div>
+          <div class="svc-badge badge-http">HTTP</div>
+          <div class="svc-badge badge-grpc">gRPC</div>
+        </div>
+        <div class="svc-box micro">
+          <div class="svc-name">Location</div>
+          <div class="svc-ports">:5104 / :6104</div>
+          <div class="svc-badge badge-http">HTTP</div>
+          <div class="svc-badge badge-grpc">gRPC</div>
+        </div>
+        <div class="svc-box micro">
+          <div class="svc-name">Battery</div>
+          <div class="svc-ports">:5105 / :6105</div>
+          <div class="svc-badge badge-http">HTTP</div>
+          <div class="svc-badge badge-grpc">gRPC</div>
+        </div>
+        <div class="svc-box micro">
+          <div class="svc-name">Trip</div>
+          <div class="svc-ports">:5106 / :6106</div>
+          <div class="svc-badge badge-http">HTTP</div>
+          <div class="svc-badge badge-grpc">gRPC</div>
+        </div>
+        <div class="svc-box micro">
+          <div class="svc-name">Telemetry</div>
+          <div class="svc-ports">:5107 / :6107</div>
+          <div class="svc-badge badge-http">HTTP</div>
+          <div class="svc-badge badge-grpc">gRPC</div>
+        </div>
+        <div class="svc-box micro">
+          <div class="svc-name">Alert</div>
+          <div class="svc-ports">:5108 / :6108</div>
+          <div class="svc-badge badge-http">HTTP</div>
+          <div class="svc-badge badge-grpc">gRPC</div>
+        </div>
+      </div>
+
+      <!-- Databases -->
+      <div class="db-grid">
+        <div class="db-box"><div class="db-icon"></div><div class="db-name">IdentityDB</div></div>
+        <div class="db-box"><div class="db-icon"></div><div class="db-name">VehicleDB</div></div>
+        <div class="db-box"><div class="db-icon"></div><div class="db-name">LocationDB</div></div>
+        <div class="db-box"><div class="db-icon"></div><div class="db-name">BatteryDB</div></div>
+        <div class="db-box"><div class="db-icon"></div><div class="db-name">TripDB</div></div>
+        <div class="db-box"><div class="db-icon"></div><div class="db-name">TelemetryDB</div></div>
+        <div class="db-box"><div class="db-icon"></div><div class="db-name">AlertDB</div></div>
+      </div>
+
+      <!-- Infrastructure -->
+      <div class="infra-row">
+        <div class="infra-box sql">
+          <div class="infra-name">SQL Server 2022</div>
+          <div class="infra-detail">Deployment + PVC (10Gi) + ClusterIP Service</div>
+          <div class="infra-detail">SA password in K8s Secret</div>
+        </div>
+        <div class="infra-box rabbit">
+          <div class="infra-name">RabbitMQ 3 + Management</div>
+          <div class="infra-detail">Deployment + PVC (2Gi) + ClusterIP Service</div>
+          <div class="infra-detail">MassTransit Async Event Bus</div>
+        </div>
+      </div>
+
+      <!-- Persistent Volumes -->
+      <div class="pv-row">
+        <div class="pv-box">
+          <div class="pv-name">PersistentVolumeClaim</div>
+          <div class="pv-detail">sqlserver-pvc — 10Gi</div>
+        </div>
+        <div class="pv-box">
+          <div class="pv-name">PersistentVolumeClaim</div>
+          <div class="pv-detail">rabbitmq-pvc — 2Gi</div>
+        </div>
+      </div>
+
+    </div><!-- end namespace -->
+
+    <!-- ConfigMap & Secrets -->
+    <div style="display: flex; gap: 16px; margin-top: 14px;">
+      <div style="flex:1; border: 1px solid #82aaff; border-radius: 8px; padding: 10px; text-align: center; background: rgba(130,170,255,0.05);">
+        <div style="font-size: 13px; font-weight: 700; color: #82aaff;">ConfigMap</div>
+        <div style="font-size: 10px; color: #8892b0;">RabbitMQ host, ports, settings</div>
+      </div>
+      <div style="flex:1; border: 1px solid #ffcb6b; border-radius: 8px; padding: 10px; text-align: center; background: rgba(255,203,107,0.05);">
+        <div style="font-size: 13px; font-weight: 700; color: #ffcb6b;">Secrets</div>
+        <div style="font-size: 10px; color: #8892b0;">DB connection strings, JWT TokenKey, SA password</div>
+      </div>
+    </div>
+
+  </div><!-- end k8s cluster -->
+
+  <!-- Registry -->
+  <div class="center" style="margin-top: 16px;">
+    <div class="registry-box">
+      <div class="title">Private Docker Registry</div>
+      <div class="detail">192.168.1.100:5000 &nbsp;|&nbsp; registry:2 &nbsp;|&nbsp; HTTP (insecure)</div>
+    </div>
+  </div>
+
+</div><!-- end vmware -->
+
+<!-- Docker Compose (Local Dev) -->
+<div class="section docker-section">
+  <div class="section-label">Docker Compose — Local Development (docker-compose.yml)</div>
+  <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; justify-content: center;">
+    <div style="border: 1px solid #0db7ed; border-radius: 6px; padding: 8px 14px; text-align: center; background: rgba(13,183,237,0.06);">
+      <div style="font-size: 12px; font-weight: 600; color: #0db7ed;">gateway-api</div>
+      <div style="font-size: 10px; color: #8892b0;">:5100</div>
+    </div>
+    <div style="border: 1px solid #c792ea; border-radius: 6px; padding: 8px 14px; text-align: center; background: rgba(199,146,234,0.06);">
+      <div style="font-size: 12px; font-weight: 600; color: #c792ea;">identity-api</div>
+      <div style="font-size: 10px; color: #8892b0;">:5101</div>
+    </div>
+    <div style="border: 1px solid #82aaff; border-radius: 6px; padding: 8px 14px; text-align: center; background: rgba(130,170,255,0.06);">
+      <div style="font-size: 12px; font-weight: 600; color: #82aaff;">catalog-api</div>
+      <div style="font-size: 10px; color: #8892b0;">:5102</div>
+    </div>
+    <div style="border: 1px solid #82aaff; border-radius: 6px; padding: 8px 14px; text-align: center; background: rgba(130,170,255,0.06);">
+      <div style="font-size: 12px; font-weight: 600; color: #82aaff;">vehicle-api</div>
+      <div style="font-size: 10px; color: #8892b0;">:5103/:6103</div>
+    </div>
+    <div style="border: 1px solid #82aaff; border-radius: 6px; padding: 8px 14px; text-align: center; background: rgba(130,170,255,0.06);">
+      <div style="font-size: 12px; font-weight: 600; color: #82aaff;">location-api</div>
+      <div style="font-size: 10px; color: #8892b0;">:5104/:6104</div>
+    </div>
+    <div style="border: 1px solid #82aaff; border-radius: 6px; padding: 8px 14px; text-align: center; background: rgba(130,170,255,0.06);">
+      <div style="font-size: 12px; font-weight: 600; color: #82aaff;">battery-api</div>
+      <div style="font-size: 10px; color: #8892b0;">:5105/:6105</div>
+    </div>
+    <div style="border: 1px solid #82aaff; border-radius: 6px; padding: 8px 14px; text-align: center; background: rgba(130,170,255,0.06);">
+      <div style="font-size: 12px; font-weight: 600; color: #82aaff;">trip-api</div>
+      <div style="font-size: 10px; color: #8892b0;">:5106/:6106</div>
+    </div>
+    <div style="border: 1px solid #82aaff; border-radius: 6px; padding: 8px 14px; text-align: center; background: rgba(130,170,255,0.06);">
+      <div style="font-size: 12px; font-weight: 600; color: #82aaff;">telemetry-api</div>
+      <div style="font-size: 10px; color: #8892b0;">:5107/:6107</div>
+    </div>
+    <div style="border: 1px solid #82aaff; border-radius: 6px; padding: 8px 14px; text-align: center; background: rgba(130,170,255,0.06);">
+      <div style="font-size: 12px; font-weight: 600; color: #82aaff;">alert-api</div>
+      <div style="font-size: 10px; color: #8892b0;">:5108/:6108</div>
+    </div>
+    <div style="border: 1px solid #ff5252; border-radius: 6px; padding: 8px 14px; text-align: center; background: rgba(255,82,82,0.06);">
+      <div style="font-size: 12px; font-weight: 600; color: #ff5252;">sqlserver</div>
+      <div style="font-size: 10px; color: #8892b0;">:1434&rarr;1433</div>
+    </div>
+    <div style="border: 1px solid #ff79c6; border-radius: 6px; padding: 8px 14px; text-align: center; background: rgba(255,121,198,0.06);">
+      <div style="font-size: 12px; font-weight: 600; color: #ff79c6;">rabbitmq</div>
+      <div style="font-size: 10px; color: #8892b0;">:5672/:15672</div>
+    </div>
+  </div>
+  <div style="text-align: center; margin-top: 10px; font-size: 11px; color: #8892b0;">
+    Network: <span style="color: #0db7ed; font-weight: 600;">sygic-net</span> (bridge) &nbsp;|&nbsp;
+    Volumes: <span style="color: #ffcb6b;">sqlserver-data</span>, <span style="color: #ffcb6b;">rabbitmq-data</span> &nbsp;|&nbsp;
+    Environment: <span style="color: #50fa7b;">ASPNETCORE_ENVIRONMENT=Docker</span>
+  </div>
+</div>
+
+<!-- Build Pipeline -->
+<div style="margin-top: 20px; text-align: center;">
+  <div style="display: inline-block; border: 2px solid #c792ea; border-radius: 10px; padding: 16px 30px; background: rgba(199,146,234,0.05);">
+    <div style="font-size: 14px; font-weight: 700; color: #c792ea; margin-bottom: 8px;">Build &amp; Deploy Pipeline</div>
+    <div style="display: flex; gap: 12px; align-items: center; justify-content: center; flex-wrap: wrap;">
+      <div style="background: rgba(130,170,255,0.1); border: 1px solid #82aaff; border-radius: 6px; padding: 6px 12px;">
+        <span style="font-size: 11px; color: #82aaff; font-weight: 600;">1. dotnet publish</span>
+      </div>
+      <span style="color: #64ffda;">&rarr;</span>
+      <div style="background: rgba(13,183,237,0.1); border: 1px solid #0db7ed; border-radius: 6px; padding: 6px 12px;">
+        <span style="font-size: 11px; color: #0db7ed; font-weight: 600;">2. docker build</span>
+      </div>
+      <span style="color: #64ffda;">&rarr;</span>
+      <div style="background: rgba(13,183,237,0.1); border: 1px solid #0db7ed; border-radius: 6px; padding: 6px 12px;">
+        <span style="font-size: 11px; color: #0db7ed; font-weight: 600;">3. docker push</span>
+        <div style="font-size: 9px; color: #8892b0;">192.168.1.100:5000</div>
+      </div>
+      <span style="color: #64ffda;">&rarr;</span>
+      <div style="background: rgba(100,255,218,0.1); border: 1px solid #64ffda; border-radius: 6px; padding: 6px 12px;">
+        <span style="font-size: 11px; color: #64ffda; font-weight: 600;">4. kubectl apply</span>
+        <div style="font-size: 9px; color: #8892b0;">k8s manifests</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="text-align: center; margin-top: 24px; font-size: 11px; color: #555;">
+  Sygic Telematics &mdash; .NET 8 Microservices &mdash; Docker + Kubernetes on VMware
+</div>
+
+</body>
+</html>
