@@ -43,8 +43,5 @@
     <Project Path="src/Shared/Shared.Kernel/Shared.Kernel.csproj" />
     <Project Path="src/Shared/Shared.Grpc/Shared.Grpc.csproj" />
   </Folder>
-  <Folder Name="/TestProject/">
-    <Project Path="TestProject/TestProject.csproj" />
-  </Folder>
   <File Path="TESTING.md" />
 </Solution>
